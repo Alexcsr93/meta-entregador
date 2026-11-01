@@ -1,5 +1,21 @@
-META ENTREGADOR v1
+META ENTREGADOR v1.2 (PWA)
 
-Publique os arquivos em um repositório GitHub Pages ou no Netlify.
-Os dados ficam salvos no próprio navegador do aparelho.
-Parâmetros iniciais: meta R$ 4.500, ganho por entrega R$ 7 e 26 dias de trabalho.
+COMO PUBLICAR (GitHub Pages)
+1. Crie um repositorio novo (ex.: meta-entregador).
+2. Envie TODOS os arquivos e pastas deste pacote, mantendo a estrutura
+   (inclua o arquivo .nojekyll).
+3. Settings > Pages > Deploy from a branch > main / root.
+4. Abra o link https://SEU-USUARIO.github.io/meta-entregador/ no celular
+   e confira se abre e funciona offline.
+
+GERAR O APK (PWABuilder)
+1. Acesse pwabuilder.com e cole o link do app publicado.
+2. O app ja traz: manifest completo, service worker com modo offline,
+   icones 192/512 (normal e maskable), icone iOS, atalho "Lancar" e prints.
+3. Clique em Package for stores > Android e gere o pacote.
+4. Guarde o arquivo de assinatura (keystore) e a senha. Sem eles nao da
+   para atualizar o app depois.
+
+ATUALIZACOES
+Ao mudar qualquer arquivo, altere a VERSION no sw.js (ex.: v1.2.1) para
+os aparelhos baixarem a versao nova.

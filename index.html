@@ -4,74 +4,91 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ea1d2c">
+<meta name="description" content="Controle de ganhos e metas para entregadores.">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Meta Entregador">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Meta Entregador</title>
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preload" href="fonts/narrow-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/narrow-700.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-:root{--red:#ea1d2c;--dark:#b3121f;--ink:#261113;--muted:#7a6769;--bg:#f6f3f3;--green:#18a558}
+@font-face{font-family:"MetaNarrow";src:url(fonts/narrow-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"MetaNarrow";src:url(fonts/narrow-700.woff2) format("woff2");font-weight:700;font-style:normal;font-display:swap}
+:root{--red:#ea1d2c;--dark:#b3121f;--ink:#2a1a1c;--muted:#85706f;--bg:#f7f4f4;--line:#efe6e7;--green:#18a558}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
-.app{max-width:640px;margin:0 auto;min-height:100vh;padding-bottom:96px}
-header{background:linear-gradient(160deg,var(--red),var(--dark));color:#fff;padding:calc(env(safe-area-inset-top) + 18px) 18px 22px;border-radius:0 0 26px 26px}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:"MetaNarrow","Roboto Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;font-size:16px;letter-spacing:.2px;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
+.app{max-width:640px;margin:0 auto;min-height:100vh;padding-bottom:104px}
+header{background:linear-gradient(160deg,var(--red),var(--dark));color:#fff;padding:calc(env(safe-area-inset-top) + 18px) 20px 22px;border-radius:0 0 26px 26px}
 header .top{display:flex;justify-content:space-between;align-items:center}
-header h1{margin:0;font-size:20px}
-header .month{font-size:12px;font-weight:800;background:#ffffff26;border:1px solid #ffffff44;padding:6px 11px;border-radius:99px;text-transform:capitalize}
-.hero{margin-top:18px}
-.hero .lbl{font-size:12px;font-weight:700;opacity:.85;letter-spacing:.4px}
-.hero .big{font-size:38px;font-weight:900;margin:2px 0 4px}
-.hero .meta{font-size:13px;opacity:.9}
-.progress{height:12px;background:#ffffff33;border-radius:99px;overflow:hidden;margin-top:14px}
+header h1{margin:0;font-size:22px;font-weight:700;letter-spacing:.3px;display:flex;align-items:center;gap:9px}
+header h1 img{width:30px;height:30px;border-radius:8px;box-shadow:0 0 0 1.5px #ffffff66}
+header .month{font-size:13px;font-weight:700;background:#ffffff26;border:1px solid #ffffff40;padding:5px 12px;border-radius:99px}
+.hero{margin-top:20px}
+.hero .lbl{font-size:13px;font-weight:700;opacity:.85;letter-spacing:1.2px}
+.hero .big{font-size:48px;font-weight:700;line-height:1.05;margin:2px 0 4px;letter-spacing:.2px}
+.hero .meta{font-size:15px;opacity:.92}
+.progress{height:10px;background:#ffffff33;border-radius:99px;overflow:hidden;margin-top:14px}
 .bar{height:100%;width:0;background:#fff;border-radius:99px;transition:width .4s}
-.falta{display:flex;justify-content:space-between;margin-top:10px;font-size:13px;font-weight:700}
+.falta{display:flex;justify-content:space-between;margin-top:10px;font-size:15px}
+.falta b{font-weight:700}
 main{padding:14px}
-.tab{display:none}.tab.active{display:block}
+.tab{display:none}.tab.active{display:block;animation:fade .22s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.card{background:#fff;border-radius:18px;padding:15px;box-shadow:0 6px 18px #4d151512;border:1px solid #efe7e8}
-.card .l{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.3px}
-.card .v{font-size:23px;font-weight:900;margin-top:5px}
-.card .s{font-size:12px;color:var(--muted);margin-top:4px}
-.red{background:var(--red);color:#fff;border:0}.red .l,.red .s{color:#ffffffd9}
-h2{font-size:16px;margin:18px 2px 9px}
-.field{margin-bottom:11px}.field label{display:block;font-size:12px;font-weight:800;color:#654f51;margin-bottom:6px}
-.field input{width:100%;border:1px solid #ddcfd0;border-radius:12px;padding:13px;font-size:16px;background:#fff;outline:none}
+.card{background:#fff;border-radius:18px;padding:15px 16px;box-shadow:0 4px 16px #4d15150f;border:1px solid var(--line)}
+.card .l{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:1px}
+.card .v{font-size:30px;font-weight:700;margin-top:4px;line-height:1.1}
+.card .s{font-size:13.5px;color:var(--muted);margin-top:4px}
+.red{background:var(--red);color:#fff;border:0}.red .l,.red .s{color:#ffffffdb}
+h2{font-size:18px;font-weight:700;margin:20px 2px 10px;letter-spacing:.3px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:14px;font-weight:700;color:#5d4749;margin-bottom:6px}
+.field input{width:100%;border:1px solid #ded0d1;border-radius:12px;padding:12px 13px;font:inherit;font-size:18px;background:#fff;color:var(--ink);outline:none}
 .field input:focus{border-color:var(--red);box-shadow:0 0 0 3px #ea1d2c1f}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-button{border:0;border-radius:13px;padding:14px 16px;font-weight:900;font-size:15px;cursor:pointer}
-.btn{width:100%}.primary{background:var(--red);color:#fff}.ghost{background:#f1e9ea;color:#5c3135}.danger{background:#fff0f1;color:var(--red)}
-.preview{background:#fff4f5;border:1px dashed #f1a3a9;border-radius:12px;padding:11px;font-size:13px;margin-bottom:12px;font-weight:700}
-.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #f0e8e9}
+button{border:0;border-radius:13px;padding:14px 16px;font:inherit;font-weight:700;font-size:17px;letter-spacing:.4px;cursor:pointer}
+.btn{width:100%}.primary{background:var(--red);color:#fff}.ghost{background:#f2eaeb;color:#5c3135}.danger{background:#fff0f1;color:var(--red)}
+.primary:active{background:var(--dark)}
+.preview{background:#fff4f5;border:1px dashed #f1a3a9;border-radius:12px;padding:11px 13px;font-size:16px;margin-bottom:12px}
+.preview b{font-weight:700;color:var(--red)}
+.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #f1e9ea}
 .item:last-child{border-bottom:0}
-.item .d{font-weight:900}.item .x{font-size:12px;color:var(--muted);margin-top:3px}
-.item .t{font-weight:900;color:var(--red);text-align:right}
-.item .del{background:none;color:var(--muted);padding:4px 0 0;font-size:11px;font-weight:700}
-.empty{text-align:center;color:var(--muted);padding:22px;font-size:14px}
-.link{background:none;color:var(--red);padding:0;font-size:13px}
-nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #eadfe0;display:flex;justify-content:center;padding:6px 8px calc(env(safe-area-inset-bottom) + 6px);box-shadow:0 -6px 20px #4d15151a;z-index:10}
+.item .d{font-weight:700;font-size:17px}.item .x{font-size:14px;color:var(--muted);margin-top:2px}
+.item .t{font-weight:700;font-size:19px;color:var(--red);text-align:right}
+.item .del{background:none;color:var(--muted);padding:4px 0 0;font-size:13px;font-weight:400;letter-spacing:.3px}
+.empty{text-align:center;color:var(--muted);padding:22px;font-size:15px}
+.link{background:none;color:var(--red);padding:0;font-size:15px;font-weight:700}
+.note{font-size:14px;color:var(--muted);margin:12px 4px;line-height:1.35}
+nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #eadfe0;display:flex;justify-content:center;padding:6px 8px calc(env(safe-area-inset-bottom) + 6px);box-shadow:0 -6px 20px #4d151512;z-index:10}
 nav .in{display:flex;width:100%;max-width:640px;gap:4px}
-nav button{flex:1;background:none;color:#8f7b7d;padding:7px 2px;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;border-radius:12px}
-nav button .ic{font-size:21px;line-height:1}
+nav button{flex:1;background:none;color:#927e80;padding:7px 2px;font-size:13px;font-weight:700;letter-spacing:.6px;display:flex;flex-direction:column;align-items:center;gap:3px;border-radius:12px}
+nav button svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 nav button.active{color:var(--red);background:#fff0f1}
-.toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:#261113;color:#fff;padding:11px 16px;border-radius:99px;font-size:13px;font-weight:700;opacity:0;pointer-events:none;transition:.3s;z-index:20}
+.toast{position:fixed;left:50%;bottom:98px;transform:translateX(-50%);background:#2a1a1c;color:#fff;padding:10px 18px;border-radius:99px;font-size:15px;opacity:0;pointer-events:none;transition:.3s;z-index:20;white-space:nowrap}
 .toast.show{opacity:1}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
 <div class="app">
 <header>
-  <div class="top"><h1>🏍️ Meta Entregador</h1><div class="month" id="month"></div></div>
+  <div class="top"><h1><img src="icons/icon-192.png" alt="">Meta Entregador</h1><div class="month" id="month"></div></div>
   <div class="hero">
     <div class="lbl">GANHO REALIZADO</div>
     <div class="big" id="earned">R$ 0,00</div>
     <div class="meta" id="goalText"></div>
     <div class="progress"><div class="bar" id="bar"></div></div>
-    <div class="falta"><span>Falta</span><span id="remaining">R$ 0,00</span></div>
+    <div class="falta"><span>Falta para a meta</span><b id="remaining">R$ 0,00</b></div>
   </div>
 </header>
 
 <main>
-  <!-- INÍCIO -->
   <section class="tab active" id="tab-home">
     <div class="grid">
       <div class="card red"><div class="l">PRECISA POR DIA</div><div class="v" id="perDay">R$ 0,00</div><div class="s">nos dias restantes</div></div>
@@ -86,7 +103,6 @@ nav button.active{color:var(--red);background:#fff0f1}
     <div class="card" id="recent"></div>
   </section>
 
-  <!-- LANÇAR -->
   <section class="tab" id="tab-add">
     <h2 style="margin-top:4px">Novo lançamento</h2>
     <div class="card">
@@ -95,14 +111,13 @@ nav button.active{color:var(--red);background:#fff0f1}
         <div class="field"><label>Entregas</label><input id="deliveries" type="number" inputmode="numeric" min="0" placeholder="Ex.: 17"></div>
         <div class="field"><label>Promoção (R$)</label><input id="promo" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Ex.: 4,00"></div>
       </div>
-      <div class="field"><label>Outros ganhos (R$) — gorjeta, ajuste...</label><input id="other" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0,00"></div>
-      <div class="preview" id="preview">Total deste lançamento: R$ 0,00</div>
+      <div class="field"><label>Outros ganhos (R$) — gorjeta, ajuste</label><input id="other" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0,00"></div>
+      <div class="preview" id="preview">Total deste lançamento: <b>R$ 0,00</b></div>
       <button class="btn primary" onclick="addEntry()">Adicionar resultado</button>
     </div>
-    <p style="font-size:12px;color:var(--muted);margin:12px 4px">Pode lançar mais de uma vez no mesmo dia (manhã e noite). O dia só conta uma vez nos dias trabalhados.</p>
+    <p class="note">Você pode lançar mais de uma vez no mesmo dia (manhã e noite). O dia conta só uma vez nos dias trabalhados.</p>
   </section>
 
-  <!-- HISTÓRICO -->
   <section class="tab" id="tab-hist">
     <div class="grid" style="margin-top:4px">
       <div class="card"><div class="l">DIAS TRABALHADOS</div><div class="v" id="hWorked">0</div></div>
@@ -112,7 +127,6 @@ nav button.active{color:var(--red);background:#fff0f1}
     <div class="card" id="history"></div>
   </section>
 
-  <!-- CONFIG -->
   <section class="tab" id="tab-cfg">
     <h2 style="margin-top:4px">Parâmetros da meta</h2>
     <div class="card">
@@ -123,16 +137,22 @@ nav button.active{color:var(--red);background:#fff0f1}
       </div>
       <button class="btn primary" onclick="saveSettings()">Salvar</button>
     </div>
+    <div id="installBox" class="hidden">
+      <h2>Aplicativo</h2>
+      <div class="card"><button class="btn primary" id="installBtn">Instalar na tela inicial</button></div>
+    </div>
+    <p class="note hidden" id="iosHint">No iPhone: toque em Compartilhar e depois em “Adicionar à Tela de Início”.</p>
     <h2>Dados</h2>
     <div class="card"><button class="btn danger" onclick="clearAll()">Apagar todos os lançamentos</button></div>
+    <p class="note" style="text-align:center">Meta Entregador v1.2 · dados salvos neste aparelho</p>
   </section>
 </main>
 
 <nav><div class="in">
-  <button data-tab="home" class="active" onclick="go('home')"><span class="ic">🏠</span>Início</button>
-  <button data-tab="add" onclick="go('add')"><span class="ic">➕</span>Lançar</button>
-  <button data-tab="hist" onclick="go('hist')"><span class="ic">📋</span>Histórico</button>
-  <button data-tab="cfg" onclick="go('cfg')"><span class="ic">⚙️</span>Config</button>
+  <button data-tab="home" class="active" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Início</button>
+  <button data-tab="add" onclick="go('add')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Lançar</button>
+  <button data-tab="hist" onclick="go('hist')"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>Histórico</button>
+  <button data-tab="cfg" onclick="go('cfg')"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>Config</button>
 </div></nav>
 <div class="toast" id="toast"></div>
 </div>
@@ -154,12 +174,12 @@ function go(tab){
 }
 function updatePreview(){
   const t=Math.round(num('deliveries'))*state.rate+num('promo')+num('other');
-  $('preview').textContent='Total deste lançamento: '+fmt(t);
+  $('preview').innerHTML='Total deste lançamento: <b>'+fmt(t)+'</b>';
 }
 ['deliveries','promo','other'].forEach(i=>$(i).addEventListener('input',updatePreview));
 function saveSettings(){
   state.goal=num('goal')||4500;state.rate=num('rate')||7;state.workDays=Math.max(1,Math.round(num('workDays')||26));
-  persist();render();toast('Configuração salva ✅');go('home');
+  persist();render();toast('Configuração salva');go('home');
 }
 function addEntry(){
   const date=$('date').value;if(!date){toast('Escolha a data');return}
@@ -167,12 +187,12 @@ function addEntry(){
   if(!deliveries&&!promo&&!other){toast('Informe entregas ou ganhos');return}
   state.entries.push({id:Date.now(),date,deliveries,promo,other});
   state.entries.sort((a,b)=>a.date.localeCompare(b.date)||a.id-b.id);
-  persist();['deliveries','promo','other'].forEach(i=>$(i).value='');updatePreview();render();toast('Lançamento adicionado ✅');go('home');
+  persist();['deliveries','promo','other'].forEach(i=>$(i).value='');updatePreview();render();toast('Lançamento adicionado');go('home');
 }
 function removeEntry(id){if(confirm('Excluir este lançamento?')){state.entries=state.entries.filter(e=>e.id!==id);persist();render()}}
 function clearAll(){if(confirm('Apagar TODOS os lançamentos?')){state.entries=[];persist();render();toast('Lançamentos apagados')}}
 function entryHtml(e,withDel){
-  const base=e.deliveries*state.rate,t=base+e.promo+e.other;
+  const t=e.deliveries*state.rate+e.promo+e.other;
   return `<div class="item"><div><div class="d">${br(e.date)}</div><div class="x">${e.deliveries} entregas · promo ${fmt(e.promo)}${e.other?' · outros '+fmt(e.other):''}</div></div><div class="t">${fmt(t)}${withDel?`<br><button class="del" onclick="removeEntry(${e.id})">Excluir</button>`:''}</div></div>`;
 }
 function render(){
@@ -185,13 +205,13 @@ function render(){
   const delPerDay=Math.ceil(perDay/state.rate);
   const avg=worked?earned/worked:0,projection=earned+avg*daysLeft;
   const pct=Math.min(100,state.goal?earned/state.goal*100:0);
-  $('month').textContent=new Date().toLocaleDateString('pt-BR',{month:'long',year:'numeric'});
+  {const m=new Date().toLocaleDateString('pt-BR',{month:'long',year:'numeric'});$('month').textContent=m.charAt(0).toUpperCase()+m.slice(1)}
   $('earned').textContent=fmt(earned);$('remaining').textContent=fmt(remaining);
   $('goalText').textContent=pct.toFixed(1).replace('.',',')+'% da meta de '+fmt(state.goal);$('bar').style.width=pct+'%';
   $('perDay').textContent=fmt(perDay);$('delPerDay').textContent=delPerDay;
   $('daysLeft').textContent=daysLeft;$('daysSub').textContent=worked+' de '+state.workDays+' dias trabalhados';
   $('projection').textContent=worked?fmt(projection):'—';
-  $('projSub').textContent=worked?(projection>=state.goal?'ritmo acima da meta 👏':'ritmo abaixo da meta'):'lance o 1º dia';
+  $('projSub').textContent=worked?(projection>=state.goal?'ritmo acima da meta':'ritmo abaixo da meta'):'lance o 1º dia';
   $('totalDel').textContent=totalDel;$('avgDel').textContent=worked?(totalDel/worked).toFixed(1).replace('.',',')+' por dia':'sem dias lançados';
   $('totalPromo').textContent=fmt(promo);$('avgPromo').textContent=worked?'média '+fmt(promo/worked)+'/dia':'sem promoções';
   $('hWorked').textContent=worked;$('hAvg').textContent=fmt(avg);
@@ -199,7 +219,20 @@ function render(){
   $('recent').innerHTML=rev.length?rev.slice(0,3).map(e=>entryHtml(e,false)).join(''):'<div class="empty">Nenhum dia lançado ainda.</div>';
   $('history').innerHTML=rev.length?rev.map(e=>entryHtml(e,true)).join(''):'<div class="empty">Nenhum dia lançado ainda.</div>';
 }
+
+/* PWA: instalação */
+let deferredPrompt=null;
+const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;if(!standalone)$('installBox').classList.remove('hidden')});
+$('installBtn').addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('installBox').classList.add('hidden')});
+window.addEventListener('appinstalled',()=>{$('installBox').classList.add('hidden');toast('App instalado')});
+if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!standalone)$('iosHint').classList.remove('hidden');
+
+/* Atalho do ícone (?tab=add) */
+const startTab=new URLSearchParams(location.search).get('tab');
+
 $('date').value=today();updatePreview();render();
-if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
+if(['home','add','hist','cfg'].includes(startTab))go(startTab);
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js'));
 </script>
 </body></html>
