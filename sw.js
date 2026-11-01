@@ -1,4 +1,4 @@
-const VERSION='v1.3.0';
+const VERSION='v1.3.1';
 const CACHE='meta-entregador-'+VERSION;
 const ASSETS=[
   './','./index.html','./manifest.json','./icon.svg','./cloud.js','./firebase-config.js',
@@ -8,7 +8,7 @@ const ASSETS=[
   './icons/apple-touch-icon.png','./icons/favicon-48.png'
 ];
 self.addEventListener('install',e=>{
-  e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()));
+  e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS.map(u=>new Request(u,{cache:'reload'})))).then(()=>self.skipWaiting()));
 });
 self.addEventListener('activate',e=>{
   e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));
@@ -17,14 +17,19 @@ self.addEventListener('fetch',e=>{
   const req=e.request;
   // Só arquivos do próprio app. Login/Firestore/Google passam direto pela rede.
   if(req.method!=='GET'||new URL(req.url).origin!==location.origin)return;
-  // Páginas: rede primeiro (pega atualização), cache como reserva offline
-  if(req.mode==='navigate'){
-    e.respondWith(fetch(req).then(res=>{const copy=res.clone();caches.open(CACHE).then(c=>c.put('./index.html',copy));return res}).catch(()=>caches.match('./index.html')));
+  const url=new URL(req.url);
+  const isCode=req.mode==='navigate'||/\.(js|json|html)$/.test(url.pathname)||url.pathname.endsWith('/');
+  if(isCode){
+    // Código e configuração: rede primeiro (sempre a versão nova), cache só offline
+    e.respondWith(fetch(req,{cache:'no-cache'}).then(res=>{
+      if(res&&res.ok){const copy=res.clone();caches.open(CACHE).then(c=>c.put(req.mode==='navigate'?'./index.html':req,copy))}
+      return res;
+    }).catch(()=>caches.match(req.mode==='navigate'?'./index.html':req,{ignoreSearch:true})));
     return;
   }
-  // Demais arquivos: usa o cache e atualiza em segundo plano
-  e.respondWith(caches.match(req,{ignoreSearch:true}).then(hit=>{
-    const net=fetch(req).then(res=>{if(res&&res.ok){const copy=res.clone();caches.open(CACHE).then(c=>c.put(req,copy))}return res}).catch(()=>hit);
-    return hit||net;
-  }));
+  // Imagens e fontes: cache primeiro
+  e.respondWith(caches.match(req,{ignoreSearch:true}).then(hit=>hit||fetch(req).then(res=>{
+    if(res&&res.ok){const copy=res.clone();caches.open(CACHE).then(c=>c.put(req,copy))}
+    return res;
+  })));
 });
