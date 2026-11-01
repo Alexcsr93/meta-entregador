@@ -1,62 +1,15 @@
-META ENTREGADOR v1.3 (PWA + login Google + backup na nuvem)
+META ENTREGADOR v2.0
 
-==============================================================
-PARTE 1 - CRIAR O FIREBASE (uma vez so, ~10 min)
-==============================================================
-1. Acesse console.firebase.google.com e clique em "Criar projeto"
-   (nome sugerido: meta-entregador). Pode desativar o Google Analytics.
-   Obs.: voce pode reaproveitar o projeto do Fatio. Os dados ficam
-   separados, mas as regras do passo 4 precisam ser ADICIONADAS as ja existentes.
+COMO ATUALIZAR O APP JA PUBLICADO (nao precisa gerar APK novo)
+1. No repositorio meta-entregador do GitHub, clique em Add file > Upload files.
+2. Arraste o CONTEUDO desta pasta (index.html, cloud.js, sw.js, manifest.json,
+   icon.svg, .nojekyll e as pastas icons e screenshots), substituindo os atuais.
+3. Pode apagar do repositorio a pasta "fonts" e o arquivo "firebase-config.js":
+   a v2.0 nao usa mais nenhum dos dois.
+4. Faca o commit e espere 1 ou 2 minutos.
+5. No celular, feche o app por completo e abra duas vezes.
+   Seus lancamentos continuam: a v2.0 le os dados da v1.x e do Firebase.
 
-2. Ative o login Google:
-   Build > Authentication > Comecar > Metodo de login > Google > Ativar.
-   Escolha o e-mail de suporte e salve.
-
-3. Crie o banco:
-   Build > Firestore Database > Criar banco de dados > modo PRODUCAO >
-   escolha a regiao (southamerica-east1 = Sao Paulo).
-
-4. Cole estas regras em Firestore > Regras > Publicar
-   (cada pessoa so enxerga os proprios dados):
-
-   rules_version = '2';
-   service cloud.firestore {
-     match /databases/{database}/documents {
-       match /metaEntregador/{uid} {
-         allow read, write: if request.auth != null && request.auth.uid == uid;
-       }
-     }
-   }
-
-5. Registre o app web:
-   Engrenagem > Configuracoes do projeto > Seus apps > icone </> (Web) >
-   apelido "meta-entregador" > Registrar app.
-   Copie o bloco firebaseConfig e COLE no arquivo firebase-config.js
-   (substituindo os "COLE_AQUI").
-
-6. Autorize o dominio onde o app esta publicado:
-   Authentication > Configuracoes > Dominios autorizados > Adicionar dominio:
-   seu-usuario.github.io   (ou o dominio do Netlify / proprio)
-   Sem isso o login Google da erro de "dominio nao autorizado".
-
-==============================================================
-PARTE 2 - PUBLICAR
-==============================================================
-1. Suba TODOS os arquivos e pastas no repositorio (inclui .nojekyll,
-   cloud.js e firebase-config.js ja preenchido).
-2. Em sw.js, se for atualizar um app ja publicado, a VERSION ja esta em v1.3.0.
-   Nas proximas mudancas, aumente (v1.3.1, v1.4.0...).
-3. Abra o link no celular, va em Config > Entrar com Google.
-
-COMO O BACKUP FUNCIONA
-- Primeiro login: o que ja estava no aparelho e o que esta na nuvem sao
-  JUNTADOS (nada se perde).
-- Depois disso, cada lancamento/edicao/exclusao sobe automaticamente e
-  aparece nos outros aparelhos logados na mesma conta.
-- Sem internet: o app funciona normal e sincroniza quando a conexao voltar.
-- Sair da conta apaga os dados DO APARELHO (continuam na nuvem).
-
-GERAR O APK (PWABuilder)
-- pwabuilder.com > cole o link publicado > Package for stores > Android.
-- Guarde o keystore e a senha.
-- Teste o login Google dentro do APK instalado antes de publicar.
+PROXIMAS ATUALIZACOES
+Aumente a linha "const VERSION=" do sw.js (v2.0.1, v2.1.0...) para os
+aparelhos baixarem a versao nova.

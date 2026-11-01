@@ -14,142 +14,175 @@
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="preload" href="fonts/narrow-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/narrow-700.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-@font-face{font-family:"MetaNarrow";src:url(fonts/narrow-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"MetaNarrow";src:url(fonts/narrow-700.woff2) format("woff2");font-weight:700;font-style:normal;font-display:swap}
-:root{--red:#ea1d2c;--dark:#b3121f;--ink:#2a1a1c;--muted:#85706f;--bg:#f7f4f4;--line:#efe6e7;--green:#18a558}
+:root{--red:#ea1d2c;--dark:#b3121f;--ink:#261113;--muted:#7a6769;--bg:#f6f3f3;--line:#efe7e8;--green:#18a558}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;font-family:"MetaNarrow","Roboto Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;font-size:16px;letter-spacing:.2px;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);overscroll-behavior-y:none}
 .app{max-width:640px;margin:0 auto;min-height:100vh;padding-bottom:104px}
-header{background:linear-gradient(160deg,var(--red),var(--dark));color:#fff;padding:calc(env(safe-area-inset-top) + 18px) 20px 22px;border-radius:0 0 26px 26px}
+header{background:linear-gradient(160deg,var(--red),var(--dark));color:#fff;padding:calc(env(safe-area-inset-top) + 16px) 18px 22px;border-radius:0 0 26px 26px}
 header .top{display:flex;justify-content:space-between;align-items:center}
-header h1{margin:0;font-size:22px;font-weight:700;letter-spacing:.3px;display:flex;align-items:center;gap:9px}
+header h1{margin:0;font-size:20px;font-weight:900;display:flex;align-items:center;gap:9px}
 header h1 img{width:30px;height:30px;border-radius:8px;box-shadow:0 0 0 1.5px #ffffff66}
 .avatar{position:relative;width:40px;height:40px;border-radius:50%;padding:0;background:#ffffff26;border:1.5px solid #ffffff66;color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
 .avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover}
 .avatar svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .avatar .st{position:absolute;right:-1px;bottom:-1px;width:12px;height:12px;border-radius:50%;border:2px solid var(--red);background:#9aa0a6}
 .avatar .st.ok{background:#34d27b}.avatar .st.sync{background:#ffcc3d}.avatar .st.err{background:#2a1a1c}
-.hero{margin-top:20px}
-.hero .lbl{font-size:13px;font-weight:700;opacity:.85;letter-spacing:1.2px;text-transform:uppercase}
-.hero .big{font-size:48px;font-weight:700;line-height:1.05;margin:2px 0 4px;letter-spacing:.2px}
-.hero .meta{font-size:15px;opacity:.92}
-.progress{height:10px;background:#ffffff33;border-radius:99px;overflow:hidden;margin-top:14px}
+.mnav{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px}
+.mnav button{width:34px;height:34px;border-radius:50%;padding:0;background:#ffffff26;color:#fff;font-size:22px;line-height:1;border:1px solid #ffffff40}
+.mnav button:disabled{opacity:.3}
+.mnav span{font-weight:800;font-size:15px;min-width:170px;text-align:center}
+.hero{margin-top:14px}
+.hero .lbl{font-size:12px;font-weight:700;opacity:.85;letter-spacing:.4px}
+.hero .big{font-size:38px;font-weight:900;margin:2px 0 4px}
+.hero .meta{font-size:13px;opacity:.92}
+.progress{height:12px;background:#ffffff33;border-radius:99px;overflow:hidden;margin-top:12px}
 .bar{height:100%;width:0;background:#fff;border-radius:99px;transition:width .4s}
-.falta{display:flex;justify-content:space-between;margin-top:10px;font-size:15px}
-.falta b{font-weight:700}
+.falta{display:flex;justify-content:space-between;margin-top:10px;font-size:13px;font-weight:700}
 main{padding:14px}
 .tab{display:none}.tab.active{display:block;animation:fade .22s ease}
 @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.card{background:#fff;border-radius:18px;padding:15px 16px;box-shadow:0 4px 16px #4d15150f;border:1px solid var(--line)}
-.card .l{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:1px}
-.card .v{font-size:30px;font-weight:700;margin-top:4px;line-height:1.1}
-.card .s{font-size:13.5px;color:var(--muted);margin-top:4px}
-.red{background:var(--red);color:#fff;border:0}.red .l,.red .s{color:#ffffffdb}
-h2{font-size:18px;font-weight:700;margin:20px 2px 10px;letter-spacing:.3px}
-.field{margin-bottom:12px}
-.field label{display:block;font-size:14px;font-weight:700;color:#5d4749;margin-bottom:6px}
-.field input{width:100%;border:1px solid #ded0d1;border-radius:12px;padding:12px 13px;font:inherit;font-size:18px;background:#fff;color:var(--ink);outline:none}
-.field input:focus{border-color:var(--red);box-shadow:0 0 0 3px #ea1d2c1f}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-button{border:0;border-radius:13px;padding:14px 16px;font:inherit;font-weight:700;font-size:17px;letter-spacing:.4px;cursor:pointer}
-.btn{width:100%}.primary{background:var(--red);color:#fff}.ghost{background:#f2eaeb;color:#5c3135}.danger{background:#fff0f1;color:var(--red)}
-.primary:active{background:var(--dark)}
-.preview{background:#fff4f5;border:1px dashed #f1a3a9;border-radius:12px;padding:11px 13px;font-size:16px;margin-bottom:12px}
-.preview b{font-weight:700;color:var(--red)}
-.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #f1e9ea}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.card{min-width:0;background:#fff;border-radius:18px;padding:15px;box-shadow:0 6px 18px #4d151512;border:1px solid var(--line)}
+.card .l{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.3px;text-transform:uppercase}
+.card .v{font-size:clamp(17px,5.3vw,23px);font-weight:900;margin-top:5px;overflow-wrap:anywhere}
+.card .s{font-size:12px;color:var(--muted);margin-top:4px}
+.red{background:var(--red);color:#fff;border:0}.red .l,.red .s{color:#ffffffdd}
+.pos{color:var(--green)}.neg{color:var(--red)}
+h2{font-size:16px;font-weight:800;margin:18px 2px 9px}
+.field{margin-bottom:11px}.field label{display:block;font-size:12px;font-weight:800;color:#654f51;margin-bottom:6px}
+.field input,.field select{width:100%;border:1px solid #ddcfd0;border-radius:12px;padding:13px;font:inherit;font-size:16px;background:#fff;color:var(--ink);outline:none}
+.field input:focus,.field select:focus{border-color:var(--red);box-shadow:0 0 0 3px #ea1d2c1f}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+button{border:0;border-radius:13px;padding:14px 16px;font:inherit;font-weight:900;font-size:15px;cursor:pointer}
+.btn{width:100%}.primary{background:var(--red);color:#fff}.primary:active{background:var(--dark)}.ghost{background:#f1e9ea;color:#5c3135}.danger{background:#fff0f1;color:var(--red)}
+.preview{background:#fff4f5;border:1px dashed #f1a3a9;border-radius:12px;padding:11px;font-size:13px;margin-bottom:12px;font-weight:700;line-height:1.5}
+.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #f0e8e9}
 .item:last-child{border-bottom:0}
-.item .d{font-weight:700;font-size:17px}.item .x{font-size:14px;color:var(--muted);margin-top:2px}
-.item .t{font-weight:700;font-size:19px;color:var(--red);text-align:right}
-.item .del{background:none;color:var(--muted);padding:4px 0 0;font-size:13px;font-weight:400;letter-spacing:.3px}
-.empty{text-align:center;color:var(--muted);padding:22px;font-size:15px}
-.link{background:none;color:var(--red);padding:0;font-size:15px;font-weight:700}
-.note{font-size:14px;color:var(--muted);margin:12px 4px;line-height:1.35}
-nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #eadfe0;display:flex;justify-content:center;padding:6px 8px calc(env(safe-area-inset-bottom) + 6px);box-shadow:0 -6px 20px #4d151512;z-index:10}
-nav .in{display:flex;width:100%;max-width:640px;gap:4px}
-nav button{flex:1;background:none;color:#927e80;padding:7px 2px;font-size:13px;font-weight:700;letter-spacing:.6px;display:flex;flex-direction:column;align-items:center;gap:3px;border-radius:12px}
-nav button svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-nav button.active{color:var(--red);background:#fff0f1}
-.toast{position:fixed;left:50%;bottom:98px;transform:translateX(-50%);background:#2a1a1c;color:#fff;padding:10px 18px;border-radius:99px;font-size:15px;opacity:0;pointer-events:none;transition:.3s;z-index:20;white-space:nowrap}
-.toast.show{opacity:1}
-.hidden{display:none!important}
-.acc-text{font-size:15px;color:#5d4749;line-height:1.35;margin-bottom:14px}
-.gbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:#3c4043;border:1px solid #dadce0;font-weight:700}
+.item .d{font-weight:900}.item .x{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.4}
+.item .t{font-weight:900;color:var(--red);text-align:right;white-space:nowrap}
+.item .t small{display:block;color:var(--muted);font-weight:700;font-size:11px}
+.item .acts{margin-top:4px}.item .acts button{background:none;color:var(--muted);padding:4px 0 0 10px;font-size:11px;font-weight:800}
+.empty{text-align:center;color:var(--muted);padding:22px;font-size:14px}
+.link{background:none;color:var(--red);padding:0;font-size:13px}
+.note{font-size:12px;color:var(--muted);margin:12px 4px;line-height:1.4}
+.pace{border-radius:14px;padding:11px 13px;font-size:13px;font-weight:800;margin-bottom:10px;border:1px solid;line-height:1.35}
+.pace.ok{background:#e8f7ef;color:#0f7a3f;border-color:#bfe8d1}.pace.bad{background:#fff0f1;color:#b3121f;border-color:#f7c4c8}.pace.warn{background:#fff8db;color:#6b5300;border-color:#f0dc8a}
+.today{margin-bottom:10px}
+.trow{display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.tv{font-size:clamp(24px,8vw,32px);font-weight:900;line-height:1.1;margin-top:3px}
+.tg{font-size:clamp(16px,5vw,19px);font-weight:900;color:var(--red);margin-top:3px;text-align:right}
+.progress.dk{background:#f0e3e4}.progress.dk .bar{background:var(--red)}
+.qrow{display:flex;gap:8px;margin-top:12px}
+.plus{flex:1;background:var(--red);color:#fff;font-size:18px;padding:16px}.plus:active{background:var(--dark)}
+.sm{padding:16px 18px}
+.shift{display:flex;align-items:center;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid #f0e8e9}
+.shiftbtn{background:#2a1a1c;color:#fff;padding:11px 14px;font-size:13px;white-space:nowrap}.shiftbtn.on{background:#fff0f1;color:var(--red)}
+.shift .s{margin:0;flex:1}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #f1e9ea;font-size:14px}
+.kv:last-child{border-bottom:0}.kv span{color:#5d4749}.kv b{font-weight:900;text-align:right}
+.chart{width:100%;height:auto;display:block}.cap{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.4}
+.ctitle{font-size:13px;font-weight:900;margin-bottom:8px}
+.acc-text{font-size:14px;color:#5d4749;line-height:1.4;margin-bottom:14px}
+.gbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:#3c4043;border:1px solid #dadce0}
 .gbtn:active{background:#f6f6f6}.gbtn svg{width:20px;height:20px}
 .acc{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.acc .pic{width:46px;height:46px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;overflow:hidden;flex:none}
+.acc .pic{width:46px;height:46px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;overflow:hidden;flex:none}
 .acc .pic img{width:100%;height:100%;object-fit:cover}
-.acc .n{font-weight:700;font-size:18px}.acc .e{font-size:14px;color:var(--muted);word-break:break-all}
-.status{display:flex;align-items:center;gap:8px;font-size:15px;background:#f8f3f3;border-radius:12px;padding:10px 12px;margin-bottom:12px}
+.acc .n{font-weight:900;font-size:17px}.acc .e{font-size:13px;color:var(--muted);word-break:break-all}
+.status{display:flex;align-items:center;gap:8px;font-size:14px;background:#f8f3f3;border-radius:12px;padding:10px 12px;margin-bottom:12px}
 .status .dot{width:10px;height:10px;border-radius:50%;background:#9aa0a6;flex:none}
 .status.ok .dot{background:var(--green)}.status.sync .dot{background:#f5a300}.status.err .dot{background:var(--red)}
+nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #eadfe0;display:flex;justify-content:center;padding:6px 6px calc(env(safe-area-inset-bottom) + 6px);box-shadow:0 -6px 20px #4d15151a;z-index:10}
+nav .in{display:flex;width:100%;max-width:640px;gap:2px}
+nav button{flex:1;background:none;color:#8f7b7d;padding:7px 0;font-size:10.5px;font-weight:800;display:flex;flex-direction:column;align-items:center;gap:3px;border-radius:12px}
+nav button svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+nav button.active{color:var(--red);background:#fff0f1}
+.toast{position:fixed;left:50%;bottom:98px;transform:translateX(-50%);background:#261113;color:#fff;padding:11px 16px;border-radius:99px;font-size:13px;font-weight:700;opacity:0;pointer-events:none;transition:.3s;z-index:20;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+.toast.show{opacity:1}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
 <div class="app">
 <header>
   <div class="top"><h1><img src="icons/icon-192.png" alt="">Meta Entregador</h1><button class="avatar" id="avatarBtn" onclick="go('cfg')" aria-label="Conta e backup"></button></div>
+  <div class="mnav"><button id="mPrev" onclick="shiftMonth(-1)" aria-label="Mês anterior">‹</button><span id="monthLbl"></span><button id="mNext" onclick="shiftMonth(1)" aria-label="Próximo mês">›</button></div>
   <div class="hero">
-    <div class="lbl">GANHO REALIZADO · <span id="monthLbl"></span></div>
+    <div class="lbl" id="earnLbl">GANHO REALIZADO</div>
     <div class="big" id="earned">R$ 0,00</div>
     <div class="meta" id="goalText"></div>
     <div class="progress"><div class="bar" id="bar"></div></div>
-    <div class="falta"><span>Falta para a meta</span><b id="remaining">R$ 0,00</b></div>
+    <div class="falta"><span id="faltaLbl">Falta para a meta</span><span id="remaining">R$ 0,00</span></div>
   </div>
 </header>
 
 <main>
+  <!-- INÍCIO -->
   <section class="tab active" id="tab-home">
-    <div class="grid">
-      <div class="card red"><div class="l">PRECISA POR DIA</div><div class="v" id="perDay">R$ 0,00</div><div class="s">nos dias restantes</div></div>
-      <div class="card red"><div class="l">ENTREGAS POR DIA</div><div class="v" id="delPerDay">0</div><div class="s">sem contar promoções</div></div>
-      <div class="card"><div class="l">DIAS RESTANTES</div><div class="v" id="daysLeft">0</div><div class="s" id="daysSub"></div></div>
-      <div class="card"><div class="l">PROJEÇÃO DO MÊS</div><div class="v" id="projection">R$ 0,00</div><div class="s" id="projSub"></div></div>
-      <div class="card"><div class="l">ENTREGAS FEITAS</div><div class="v" id="totalDel">0</div><div class="s" id="avgDel"></div></div>
-      <div class="card"><div class="l">PROMOÇÕES</div><div class="v" id="totalPromo">R$ 0,00</div><div class="s" id="avgPromo"></div></div>
-    </div>
-    <button class="btn primary" style="margin-top:14px" onclick="go('add')">+ Lançar ganhos de hoje</button>
+    <div id="paceBox"></div>
+    <div id="todayBox"></div>
+    <div class="grid" id="homeGrid"></div>
+    <button class="btn primary" style="margin-top:14px" onclick="openAdd()">+ Lançar dia completo</button>
     <h2>Últimos lançamentos <button class="link" style="float:right" onclick="go('hist')">ver tudo</button></h2>
     <div class="card" id="recent"></div>
   </section>
 
+  <!-- LANÇAR -->
   <section class="tab" id="tab-add">
-    <h2 style="margin-top:4px">Novo lançamento</h2>
+    <h2 id="addTitle" style="margin-top:4px">Novo lançamento</h2>
     <div class="card">
       <div class="field"><label>Data</label><input id="date" type="date"></div>
       <div class="row2">
         <div class="field"><label>Entregas</label><input id="deliveries" type="number" inputmode="numeric" min="0" placeholder="Ex.: 17"></div>
         <div class="field"><label>Promoção (R$)</label><input id="promo" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Ex.: 4,00"></div>
       </div>
-      <div class="field"><label>Outros ganhos (R$) — gorjeta, ajuste</label><input id="other" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0,00"></div>
-      <div class="preview" id="preview">Total deste lançamento: <b>R$ 0,00</b></div>
-      <button class="btn primary" onclick="addEntry()">Adicionar resultado</button>
+      <div class="row2">
+        <div class="field"><label>Km rodados</label><input id="km" type="number" inputmode="decimal" min="0" step="0.1" placeholder="Ex.: 62"></div>
+        <div class="field"><label>Horas trabalhadas</label><input id="hours" type="number" inputmode="decimal" min="0" step="0.05" placeholder="Ex.: 6,5"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Outros ganhos (R$)</label><input id="other" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Gorjeta, ajuste"></div>
+        <div class="field"><label>Custos (R$)</label><input id="cost" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Combustível etc."></div>
+      </div>
+      <div class="preview" id="preview"></div>
+      <button class="btn primary" id="saveBtn" onclick="saveEntry()">Adicionar resultado</button>
+      <button class="btn ghost hidden" id="cancelBtn" style="margin-top:8px" onclick="cancelEdit()">Cancelar edição</button>
     </div>
-    <p class="note">Você pode lançar mais de uma vez no mesmo dia (manhã e noite). O dia conta só uma vez nos dias trabalhados.</p>
+    <p class="note" id="addNote">Se já houver lançamento no dia, os valores são <b>somados</b> a ele. Deixe os custos em branco para usar o custo por km das configurações.</p>
   </section>
 
+  <!-- MÉTRICAS -->
+  <section class="tab" id="tab-stats">
+    <div id="statsBox"></div>
+  </section>
+
+  <!-- HISTÓRICO -->
   <section class="tab" id="tab-hist">
     <div class="grid" style="margin-top:4px">
-      <div class="card"><div class="l">DIAS TRABALHADOS</div><div class="v" id="hWorked">0</div></div>
-      <div class="card"><div class="l">MÉDIA POR DIA</div><div class="v" id="hAvg">R$ 0,00</div></div>
+      <div class="card"><div class="l">Dias trabalhados</div><div class="v" id="hWorked">0</div></div>
+      <div class="card"><div class="l">Média por dia</div><div class="v" id="hAvg">R$ 0,00</div></div>
     </div>
-    <h2>Lançamentos</h2>
+    <h2>Lançamentos do mês</h2>
     <div class="card" id="history"></div>
   </section>
 
+  <!-- CONFIG -->
   <section class="tab" id="tab-cfg">
     <h2 style="margin-top:4px">Conta e backup</h2>
     <div class="card" id="accountCard"></div>
     <h2>Parâmetros da meta</h2>
     <div class="card">
+      <div class="note" style="margin:0 0 12px" id="cfgFor"></div>
       <div class="field"><label>Meta mensal (R$)</label><input id="goal" type="number" inputmode="decimal" step="0.01"></div>
       <div class="row2">
         <div class="field"><label>Ganho por entrega (R$)</label><input id="rate" type="number" inputmode="decimal" step="0.01"></div>
         <div class="field"><label>Dias a trabalhar</label><input id="workDays" type="number" inputmode="numeric" min="1" max="31"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Custo por km (R$)</label><input id="costKm" type="number" inputmode="decimal" step="0.01" min="0" placeholder="Ex.: 0,35"></div>
+        <div class="field"><label>A meta conta o ganho</label><select id="goalBase"><option value="gross">Bruto</option><option value="net">Líquido (após custos)</option></select></div>
       </div>
       <button class="btn primary" onclick="saveSettings()">Salvar</button>
     </div>
@@ -158,15 +191,21 @@ nav button.active{color:var(--red);background:#fff0f1}
       <div class="card"><button class="btn primary" id="installBtn">Instalar na tela inicial</button></div>
     </div>
     <p class="note hidden" id="iosHint">No iPhone: toque em Compartilhar e depois em “Adicionar à Tela de Início”.</p>
-    <h2>Dados</h2>
-    <div class="card"><button class="btn danger" onclick="clearAll()">Apagar todos os lançamentos</button></div>
-    <p class="note" style="text-align:center">Meta Entregador v1.3</p>
+    <h2>Seus dados</h2>
+    <div class="card">
+      <div class="row2"><button class="ghost" onclick="exportCsv()">Exportar planilha</button><button class="ghost" onclick="exportJson()">Salvar backup</button></div>
+      <button class="btn ghost" style="margin-top:8px" onclick="$('impFile').click()">Restaurar backup</button>
+      <input type="file" id="impFile" accept=".json,application/json" class="hidden" onchange="importJson(event)">
+      <button class="btn danger" style="margin-top:8px" onclick="clearAll()">Apagar todos os lançamentos</button>
+    </div>
+    <p class="note" style="text-align:center">Meta Entregador v2.0</p>
   </section>
 </main>
 
 <nav><div class="in">
   <button data-tab="home" class="active" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Início</button>
-  <button data-tab="add" onclick="go('add')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Lançar</button>
+  <button data-tab="add" onclick="openAdd()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Lançar</button>
+  <button data-tab="stats" onclick="go('stats')"><svg viewBox="0 0 24 24"><path d="M5 20V11M12 20V4M19 20v-6"/></svg>Métricas</button>
   <button data-tab="hist" onclick="go('hist')"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>Histórico</button>
   <button data-tab="cfg" onclick="go('cfg')"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>Config</button>
 </div></nav>
@@ -174,35 +213,139 @@ nav button.active{color:var(--red);background:#fff0f1}
 </div>
 
 <script>
-const KEY='meta-entregador-v1';
-const DEFAULT={goal:4500,rate:7,workDays:26,settingsAt:0,entries:[],deleted:[]};
-let state=Object.assign({},DEFAULT,JSON.parse(localStorage.getItem(KEY)||'null')||{});
-state.entries=state.entries||[];state.deleted=state.deleted||[];
+/* ================= utilidades ================= */
+const KEY='meta-entregador-v1',SHIFT_KEY='meta-entregador-shift';
 const $=id=>document.getElementById(id);
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const today=()=>ymd(new Date());
+const curMonth=()=>today().slice(0,7);
+const parseD=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
+const MESES=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const WD=['dom','seg','ter','qua','qui','sex','sáb'];
+const WDL=['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+const monthName=k=>{const [y,m]=k.split('-');return MESES[+m-1]+' de '+y};
 const fmt=v=>Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-const num=id=>Number($(id).value||0);
+const fnum=(v,d=1)=>Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:d});
 const br=d=>d.split('-').reverse().join('/');
+const num=id=>Number($(id).value||0);
+const r2=v=>Math.round(v*100)/100;
+const prevKey=k=>{const [y,m]=k.split('-').map(Number);const d=new Date(y,m-2,1);return d.getFullYear()+'-'+pad(d.getMonth()+1)};
 const esc=t=>String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('show'),2200)}
+function vibe(ms){try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}}
+function setVal(id,v){const el=$(id);if(el&&document.activeElement!==el)el.value=v}
+
+/* ================= dados ================= */
+function normE(e){return {id:e.id,date:e.date,deliveries:+e.deliveries||0,promo:+e.promo||0,other:+e.other||0,km:+e.km||0,hours:+e.hours||0,cost:(e.cost==null||e.cost==='')?null:+e.cost,r:(e.r==null||e.r==='')?null:+e.r,u:e.u||0}}
+function norm(s){s=s||{};return {goal:s.goal!=null?+s.goal:4500,rate:s.rate!=null?+s.rate:7,workDays:s.workDays!=null?+s.workDays:26,costKm:s.costKm!=null?+s.costKm:0,goalBase:s.goalBase==='net'?'net':'gross',settingsAt:s.settingsAt||0,monthCfg:s.monthCfg||{},entries:(s.entries||[]).map(normE),deleted:s.deleted||[]}}
+const core=s=>({goal:s.goal,rate:s.rate,workDays:s.workDays,costKm:s.costKm,goalBase:s.goalBase,settingsAt:s.settingsAt||0,
+  monthCfg:Object.fromEntries(Object.keys(s.monthCfg||{}).sort().map(k=>[k,s.monthCfg[k]])),
+  entries:[...s.entries].sort((a,b)=>a.id-b.id).map(normE),
+  deleted:[...new Set(s.deleted||[])].sort((a,b)=>a-b)});
+const same=(a,b)=>JSON.stringify(core(norm(a)))===JSON.stringify(core(norm(b)));
+function merge(A,B){
+  const a=norm(A),b=norm(B);
+  const del=new Set([...a.deleted,...b.deleted]);
+  const map=new Map();
+  [...a.entries,...b.entries].forEach(e=>{if(del.has(e.id))return;const o=map.get(e.id);if(!o||(e.u||0)>(o.u||0))map.set(e.id,e)});
+  const pick=(a.settingsAt||0)>=(b.settingsAt||0)?a:b;
+  const mc={};
+  new Set([...Object.keys(a.monthCfg),...Object.keys(b.monthCfg)]).forEach(k=>{const x=a.monthCfg[k],y=b.monthCfg[k];mc[k]=!x?y:(!y?x:((x.at||0)>=(y.at||0)?x:y))});
+  return core({goal:pick.goal,rate:pick.rate,workDays:pick.workDays,costKm:pick.costKm,goalBase:pick.goalBase,settingsAt:pick.settingsAt,monthCfg:mc,entries:[...map.values()],deleted:[...del]});
+}
+let state=norm(JSON.parse(localStorage.getItem(KEY)||'null'));
+let viewMonth=curMonth();
+function cfgFor(m){const c=state.monthCfg[m];const d={goal:state.goal,rate:state.rate,workDays:state.workDays,costKm:state.costKm,goalBase:state.goalBase};return c?Object.assign(d,c):d}
+const eGross=(e,cfg)=>e.deliveries*(e.r!=null?e.r:cfg.rate)+e.promo+e.other;
+const eCost=(e,cfg)=>e.cost!=null?e.cost:e.km*cfg.costKm;
+const monthsWithData=()=>[...new Set(state.entries.map(e=>e.date.slice(0,7)))].sort();
+const minMonth=()=>{const m=monthsWithData();return m.length&&m[0]<curMonth()?m[0]:curMonth()};
+
+/* ================= cálculos ================= */
+function calc(m){
+  const cfg=cfgFor(m),net=cfg.goalBase==='net';
+  const days={};
+  state.entries.filter(e=>e.date.startsWith(m)).forEach(e=>{
+    const d=days[e.date]||(days[e.date]={date:e.date,deliveries:0,promo:0,other:0,km:0,hours:0,cost:0,gross:0,net:0});
+    const g=eGross(e,cfg),c=eCost(e,cfg);
+    d.deliveries+=e.deliveries;d.promo+=e.promo;d.other+=e.other;d.km+=e.km;d.hours+=e.hours;d.cost+=c;d.gross+=g;d.net+=g-c;
+  });
+  const list=Object.values(days).sort((a,b)=>a.date.localeCompare(b.date));
+  const sum=k=>list.reduce((s,d)=>s+d[k],0);
+  const T={gross:sum('gross'),cost:sum('cost'),net:sum('net'),deliveries:sum('deliveries'),promo:sum('promo'),other:sum('other'),km:sum('km'),hours:sum('hours')};
+  const met=d=>net?d.net:d.gross;
+  const hd=list.filter(d=>d.hours>0),kd=list.filter(d=>d.km>0);
+  const ss=(a,f)=>a.reduce((s,d)=>s+f(d),0);
+  T.H={hours:ss(hd,d=>d.hours),gross:ss(hd,d=>d.gross),net:ss(hd,d=>d.net),met:ss(hd,met),deliveries:ss(hd,d=>d.deliveries),days:hd.length};
+  T.K={km:ss(kd,d=>d.km),gross:ss(kd,d=>d.gross),net:ss(kd,d=>d.net),deliveries:ss(kd,d=>d.deliveries),days:kd.length};
+  const R={m,cfg,net,days,list,T,met};
+  R.earned=net?T.net:T.gross;
+  R.remaining=Math.max(0,cfg.goal-R.earned);
+  R.pct=cfg.goal?Math.min(100,Math.max(0,R.earned/cfg.goal*100)):0;
+  R.worked=list.length;
+  R.avgDay=R.worked?R.earned/R.worked:0;
+  const [y,mo]=m.split('-').map(Number);R.dim=new Date(y,mo,0).getDate();
+  R.isCur=(m===curMonth());
+  if(R.isCur){
+    const t=today(),tDay=+t.slice(8,10);
+    const before=list.filter(d=>d.date<t),td=days[t]||null;
+    R.earnedBefore=before.reduce((s,d)=>s+met(d),0);R.workedBefore=before.length;
+    R.calLeft=R.dim-tDay+1;
+    R.workLeft=Math.max(0,cfg.workDays-R.workedBefore);
+    R.effDays=Math.max(1,Math.min(R.workLeft,R.calLeft));
+    R.overPlan=R.workLeft>R.calLeft;
+    R.targetToday=Math.max(0,cfg.goal-R.earnedBefore)/R.effDays;
+    R.todayWorked=!!td;R.todayEarned=td?met(td):0;R.todayDel=td?td.deliveries:0;
+    R.todayLeft=Math.max(0,R.targetToday-R.todayEarned);
+    const inc=R.workedBefore+(R.todayWorked?1:0);
+    const avail=R.todayWorked?R.calLeft-1:R.calLeft;
+    R.remWork=Math.max(0,Math.min(cfg.workDays-inc,avail));
+    R.rest=Math.max(0,avail-R.remWork);
+    R.fromTomorrow=Math.max(0,Math.min(cfg.workDays-inc,R.calLeft-1));
+    R.perDayTomorrow=R.fromTomorrow?R.remaining/R.fromTomorrow:null;
+    R.avgBase=R.workedBefore?R.earnedBefore/R.workedBefore:(R.todayWorked?R.todayEarned:0);
+    R.projection=inc>=3?R.earned+R.avgBase*R.remWork:null;
+    R.daysToGoal=R.remaining<=0?0:(R.avgBase>0?Math.ceil(R.remaining/R.avgBase):null);
+    R.ideal=cfg.workDays?cfg.goal*R.workedBefore/cfg.workDays:0;
+    R.paceDiff=R.earnedBefore-R.ideal;
+    let perDel=cfg.rate;
+    if(net&&T.deliveries>0){const pd=cfg.rate-T.cost/T.deliveries;if(pd>0.01)perDel=pd}
+    R.perDel=perDel;
+    R.delToday=Math.ceil(R.targetToday/perDel-1e-9);
+    R.delLeft=Math.ceil(R.todayLeft/perDel-1e-9);
+  }
+  return R;
+}
+function weekdayStats(){
+  const byDay={};
+  state.entries.forEach(e=>{const cfg=cfgFor(e.date.slice(0,7));const g=eGross(e,cfg)-(cfg.goalBase==='net'?eCost(e,cfg):0);byDay[e.date]=(byDay[e.date]||0)+g});
+  const sum=Array(7).fill(0),cnt=Array(7).fill(0);
+  Object.keys(byDay).forEach(d=>{const w=parseD(d).getDay();sum[w]+=byDay[d];cnt[w]++});
+  return {avg:sum.map((s,i)=>cnt[i]?s/cnt[i]:0),cnt};
+}
+function records(){
+  const byDay={};
+  state.entries.forEach(e=>{const cfg=cfgFor(e.date.slice(0,7));const d=byDay[e.date]||(byDay[e.date]={date:e.date,gross:0,del:0,promo:0,hours:0});d.gross+=eGross(e,cfg);d.del+=e.deliveries;d.promo+=e.promo;d.hours+=e.hours});
+  const L=Object.values(byDay);if(!L.length)return null;
+  const best=(f,filt)=>{const l=filt?L.filter(filt):L;return l.length?l.reduce((a,b)=>f(b)>f(a)?b:a):null};
+  return {gross:best(d=>d.gross),del:best(d=>d.del),promo:best(d=>d.promo,d=>d.promo>0),hour:best(d=>d.gross/d.hours,d=>d.hours>0)};
+}
+
+/* ================= navegação ================= */
 function go(tab){
   document.querySelectorAll('.tab').forEach(s=>s.classList.toggle('active',s.id==='tab-'+tab));
   document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
   window.scrollTo({top:0,behavior:'smooth'});
 }
-
-/* ---------- dados locais + sincronização ---------- */
-const core=s=>({goal:s.goal,rate:s.rate,workDays:s.workDays,settingsAt:s.settingsAt||0,
-  entries:[...(s.entries||[])].sort((a,b)=>a.id-b.id||0).map(e=>({id:e.id,date:e.date,deliveries:e.deliveries||0,promo:e.promo||0,other:e.other||0})),
-  deleted:[...new Set(s.deleted||[])].sort((a,b)=>a-b)});
-const same=(a,b)=>JSON.stringify(core(a))===JSON.stringify(core(b));
-function merge(a,b){
-  const del=new Set([...(a.deleted||[]),...(b.deleted||[])]);
-  const map=new Map();
-  [...(a.entries||[]),...(b.entries||[])].forEach(e=>{if(!del.has(e.id)&&!map.has(e.id))map.set(e.id,e)});
-  const pick=(a.settingsAt||0)>=(b.settingsAt||0)&&a.goal!=null?a:(b.goal!=null?b:a);
-  return core({goal:pick.goal,rate:pick.rate,workDays:pick.workDays,settingsAt:pick.settingsAt||0,entries:[...map.values()],deleted:[...del]});
+function shiftMonth(d){
+  const [y,m]=viewMonth.split('-').map(Number);const dt=new Date(y,m-1+d,1);
+  const k=dt.getFullYear()+'-'+pad(dt.getMonth()+1);
+  if(k<minMonth()||k>curMonth())return;
+  viewMonth=k;render();
 }
+
+/* ================= sincronização (Firebase) ================= */
 let Cloud=null,cloudState='loading',user=null,ready=false,dirty=false,syncStatus='idle',syncErr='',lastSync=Number(localStorage.getItem(KEY+'-last')||0),pushT=null,unwatch=null;
 function persist(skipSync){
   localStorage.setItem(KEY,JSON.stringify(core(state)));
@@ -219,17 +362,13 @@ async function pushNow(){
 }
 function onRemote(remote,pending){
   const merged=merge(state,remote||{});
-  if(!same(merged,state)){state=Object.assign({},state,merged);persist(true);render()}
+  if(!same(merged,state)){state=norm(merged);persist(true);render()}
   if(pending)return;
   ready=true;
   if(!remote||!same(merged,remote))pushNow();
   else{dirty=false;markSynced();setStatus('ok')}
 }
-function startUser(u){
-  user=u;ready=false;setStatus('syncing');
-  if(unwatch)unwatch();
-  unwatch=Cloud.watch(u.uid,onRemote,err=>setStatus('error',err));
-}
+function startUser(u){user=u;ready=false;setStatus('syncing');if(unwatch)unwatch();unwatch=Cloud.watch(u.uid,onRemote,err=>setStatus('error',err))}
 function stopUser(){if(unwatch)unwatch();unwatch=null;user=null;ready=false;syncStatus='idle';renderAccount()}
 async function signIn(){
   if(!Cloud||cloudState!=='ready'){await bootCloud();if(cloudState!=='ready'){toast('Sem conexão com o serviço do Google');return}}
@@ -240,17 +379,12 @@ async function signIn(){
     if(m!=='')toast(m||'Não foi possível entrar ('+(r.code||'erro')+')');
   }
 }
-function syncNow(){
-  if(!user)return;
-  if(!ready){setStatus(navigator.onLine?'syncing':'offline');return}
-  pushNow();
-}
+function syncNow(){if(!user)return;if(!ready){setStatus(navigator.onLine?'syncing':'offline');return}pushNow()}
 async function signOutUser(){
   const msg=dirty?'Há alterações que ainda NÃO foram enviadas para a nuvem e serão perdidas neste aparelho. Sair mesmo assim?':'Sair da conta? Os dados deste aparelho serão removidos, mas continuam salvos na sua conta Google.';
   if(!confirm(msg))return;
   try{await Cloud.signOut()}catch(e){}
-  stopUser();
-  state=Object.assign({},DEFAULT,{entries:[],deleted:[]});persist(true);dirty=false;render();toast('Você saiu da conta');
+  stopUser();state=norm({});persist(true);dirty=false;viewMonth=curMonth();render();toast('Você saiu da conta');
 }
 function ago(t){if(!t)return'';const s=Math.round((Date.now()-t)/1000);if(s<45)return'agora';if(s<3600)return'há '+Math.round(s/60)+' min';if(s<86400)return'há '+Math.round(s/3600)+' h';return'em '+new Date(t).toLocaleDateString('pt-BR')}
 const G='<svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.9 2.4 30.4 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.7a14.5 14.5 0 0 1 0-9.4l-7.9-6.1a24 24 0 0 0 0 21.6l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.9 2.3-8.4 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>';
@@ -261,7 +395,7 @@ function renderAccount(){
   if(user){dot=syncStatus==='ok'?'ok':(syncStatus==='error'?'err':(syncStatus==='syncing'?'sync':''))}
   av.innerHTML=(user&&user.photoURL?`<img src="${esc(user.photoURL)}" alt="" referrerpolicy="no-referrer">`:userSvg)+(user?`<span class="st ${dot}"></span>`:'');
   if(!user){
-    if(cloudState==='unconfigured'){box.innerHTML='<div class="acc-text">O backup na nuvem ainda não foi configurado. Preencha o arquivo <b>firebase-config.js</b> (veja o LEIA-ME). Enquanto isso, os dados ficam só neste aparelho.</div>';return}
+    if(cloudState==='unconfigured'){box.innerHTML='<div class="acc-text">O backup na nuvem ainda não foi configurado. Enquanto isso, os dados ficam só neste aparelho.</div>';return}
     if(cloudState==='unavailable'){box.innerHTML='<div class="acc-text">Não foi possível conectar ao serviço de login. Verifique a internet e tente de novo. Seus dados continuam salvos neste aparelho.</div><button class="btn ghost" onclick="bootCloud()">Tentar novamente</button>';return}
     box.innerHTML=`<div class="acc-text">Entre com sua conta Google para guardar um backup na nuvem e acessar seus ganhos em qualquer aparelho.</div><button class="btn gbtn" onclick="signIn()" ${cloudState==='loading'?'disabled':''}>${G}Entrar com Google</button>`;
     return;
@@ -292,66 +426,254 @@ window.addEventListener('online',()=>{if(cloudState==='unavailable')bootCloud();
 window.addEventListener('offline',()=>renderAccount());
 setInterval(()=>{if(user&&syncStatus==='ok')renderAccount()},60000);
 
-/* ---------- ações do app ---------- */
+/* ================= lançamentos ================= */
+let editId=null;
+const lastOf=date=>state.entries.filter(e=>e.date===date).sort((a,b)=>a.id-b.id).pop();
+function formVals(){
+  const d=$('date').value||today(),cfg=cfgFor(d.slice(0,7));
+  const del=Math.max(0,Math.round(num('deliveries'))),promo=Math.max(0,num('promo')),other=Math.max(0,num('other')),km=Math.max(0,num('km')),hours=Math.max(0,num('hours'));
+  const cost=$('cost').value===''?null:Math.max(0,num('cost'));
+  const e0=editId?state.entries.find(x=>x.id===editId):null;
+  const rate=e0&&e0.r!=null?e0.r:cfg.rate;
+  const gross=del*rate+promo+other,c=cost!=null?cost:km*cfg.costKm;
+  return {del,promo,other,km,hours,cost,rate,gross,c,net:gross-c};
+}
 function updatePreview(){
-  const t=Math.round(num('deliveries'))*state.rate+num('promo')+num('other');
-  $('preview').innerHTML='Total deste lançamento: <b>'+fmt(t)+'</b>';
+  const v=formVals();
+  $('preview').innerHTML=`Bruto: <b>${fmt(v.gross)}</b> · Custos: <b>${fmt(v.c)}</b> · Líquido: <b>${fmt(v.net)}</b>`+(v.hours>0?`<br>Ganho por hora: <b>${fmt(v.gross/v.hours)}</b>`:'');
 }
-['deliveries','promo','other'].forEach(i=>$(i).addEventListener('input',updatePreview));
-function saveSettings(){
-  state.goal=num('goal')||4500;state.rate=num('rate')||7;state.workDays=Math.max(1,Math.round(num('workDays')||26));state.settingsAt=Date.now();
-  persist();render();toast('Configuração salva');go('home');
+['deliveries','promo','other','km','hours','cost','date'].forEach(i=>$(i).addEventListener('input',updatePreview));
+function clearForm(){['deliveries','promo','other','km','hours','cost'].forEach(i=>$(i).value='');$('date').value=today();updatePreview()}
+function openAdd(){cancelEdit(true);go('add')}
+function cancelEdit(silent){
+  editId=null;clearForm();
+  $('addTitle').textContent='Novo lançamento';$('saveBtn').textContent='Adicionar resultado';$('cancelBtn').classList.add('hidden');
+  $('addNote').classList.remove('hidden');
+  if(!silent)go('hist');
 }
-function addEntry(){
+function editEntry(id){
+  const e=state.entries.find(x=>x.id===id);if(!e)return;
+  editId=id;
+  $('date').value=e.date;$('deliveries').value=e.deliveries||'';$('promo').value=e.promo||'';$('other').value=e.other||'';$('km').value=e.km||'';$('hours').value=e.hours||'';$('cost').value=e.cost!=null?e.cost:'';
+  $('addTitle').textContent='Editar lançamento';$('saveBtn').textContent='Salvar alterações';$('cancelBtn').classList.remove('hidden');$('addNote').classList.add('hidden');
+  updatePreview();go('add');
+}
+function saveEntry(){
   const date=$('date').value;if(!date){toast('Escolha a data');return}
-  const deliveries=Math.max(0,Math.round(num('deliveries'))),promo=Math.max(0,num('promo')),other=Math.max(0,num('other'));
-  if(!deliveries&&!promo&&!other){toast('Informe entregas ou ganhos');return}
-  state.entries.push({id:Date.now(),date,deliveries,promo,other});
-  state.entries.sort((a,b)=>a.date.localeCompare(b.date)||a.id-b.id);
-  persist();['deliveries','promo','other'].forEach(i=>$(i).value='');updatePreview();render();toast('Lançamento adicionado');go('home');
+  const v=formVals();
+  if(!v.del&&!v.promo&&!v.other&&!v.km&&!v.hours&&v.cost==null){toast('Informe ao menos um valor');return}
+  const now=Date.now();
+  if(editId){
+    const e=state.entries.find(x=>x.id===editId);
+    if(e){e.date=date;e.deliveries=v.del;e.promo=v.promo;e.other=v.other;e.km=v.km;e.hours=r2(v.hours);e.cost=v.cost;e.u=now}
+    toast('Lançamento atualizado');
+  }else{
+    const ex=lastOf(date);
+    if(ex){ex.deliveries+=v.del;ex.promo=r2(ex.promo+v.promo);ex.other=r2(ex.other+v.other);ex.km=r2(ex.km+v.km);ex.hours=r2(ex.hours+v.hours);if(v.cost!=null)ex.cost=r2((ex.cost||0)+v.cost);ex.u=now;toast('Somado ao lançamento do dia')}
+    else{state.entries.push(normE({id:now,date,deliveries:v.del,promo:v.promo,other:v.other,km:v.km,hours:r2(v.hours),cost:v.cost,r:cfgFor(date.slice(0,7)).rate,u:now}));toast('Lançamento adicionado')}
+  }
+  persist();
+  const m=date.slice(0,7);if(m<=curMonth())viewMonth=m;
+  cancelEdit(true);render();go('home');
 }
 function removeEntry(id){if(confirm('Excluir este lançamento?')){state.entries=state.entries.filter(e=>e.id!==id);state.deleted.push(id);persist();render()}}
-function clearAll(){if(confirm('Apagar TODOS os lançamentos?'+(user?' Isso também apaga da nuvem.':''))){state.entries.forEach(e=>state.deleted.push(e.id));state.entries=[];persist();render();toast('Lançamentos apagados')}}
-function entryHtml(e,withDel){
-  const t=e.deliveries*state.rate+e.promo+e.other;
-  return `<div class="item"><div><div class="d">${br(e.date)}</div><div class="x">${e.deliveries} entregas · promo ${fmt(e.promo)}${e.other?' · outros '+fmt(e.other):''}</div></div><div class="t">${fmt(t)}${withDel?`<br><button class="del" onclick="removeEntry(${e.id})">Excluir</button>`:''}</div></div>`;
-}
-function render(){
-  $('goal').value=state.goal;$('rate').value=state.rate;$('workDays').value=state.workDays;
-  const worked=new Set(state.entries.map(e=>e.date)).size;
-  const totalDel=state.entries.reduce((s,e)=>s+e.deliveries,0),promo=state.entries.reduce((s,e)=>s+e.promo,0),other=state.entries.reduce((s,e)=>s+e.other,0);
-  const earned=totalDel*state.rate+promo+other,remaining=Math.max(0,state.goal-earned);
-  const daysLeft=Math.max(0,state.workDays-worked);
-  const perDay=daysLeft?remaining/daysLeft:remaining;
-  const delPerDay=Math.ceil(perDay/state.rate);
-  const avg=worked?earned/worked:0,projection=earned+avg*daysLeft;
-  const pct=Math.min(100,state.goal?earned/state.goal*100:0);
-  $('monthLbl').textContent=new Date().toLocaleDateString('pt-BR',{month:'long',year:'numeric'});
-  $('earned').textContent=fmt(earned);$('remaining').textContent=fmt(remaining);
-  $('goalText').textContent=pct.toFixed(1).replace('.',',')+'% da meta de '+fmt(state.goal);$('bar').style.width=pct+'%';
-  $('perDay').textContent=fmt(perDay);$('delPerDay').textContent=delPerDay;
-  $('daysLeft').textContent=daysLeft;$('daysSub').textContent=worked+' de '+state.workDays+' dias trabalhados';
-  $('projection').textContent=worked?fmt(projection):'—';
-  $('projSub').textContent=worked?(projection>=state.goal?'ritmo acima da meta':'ritmo abaixo da meta'):'lance o 1º dia';
-  $('totalDel').textContent=totalDel;$('avgDel').textContent=worked?(totalDel/worked).toFixed(1).replace('.',',')+' por dia':'sem dias lançados';
-  $('totalPromo').textContent=fmt(promo);$('avgPromo').textContent=worked?'média '+fmt(promo/worked)+'/dia':'sem promoções';
-  $('hWorked').textContent=worked;$('hAvg').textContent=fmt(avg);
-  const rev=[...state.entries].reverse();
-  $('recent').innerHTML=rev.length?rev.slice(0,3).map(e=>entryHtml(e,false)).join(''):'<div class="empty">Nenhum dia lançado ainda.</div>';
-  $('history').innerHTML=rev.length?rev.map(e=>entryHtml(e,true)).join(''):'<div class="empty">Nenhum dia lançado ainda.</div>';
+function clearAll(){if(confirm('Apagar TODOS os lançamentos de todos os meses?'+(user?' Isso também apaga da nuvem.':''))){state.entries.forEach(e=>state.deleted.push(e.id));state.entries=[];persist();viewMonth=curMonth();render();toast('Lançamentos apagados')}}
+function dropIfEmpty(e){if(!e.deliveries&&!e.promo&&!e.other&&!e.km&&!e.hours&&e.cost==null){state.entries=state.entries.filter(x=>x.id!==e.id);state.deleted.push(e.id)}}
+function quick(n){
+  const t=today();let e=lastOf(t);
+  if(!e){if(n<=0)return;e=normE({id:Date.now(),date:t,r:cfgFor(curMonth()).rate});state.entries.push(e)}
+  e.deliveries=Math.max(0,e.deliveries+n);e.u=Date.now();dropIfEmpty(e);
+  viewMonth=curMonth();persist();render();vibe(15);
 }
 
-/* ---------- PWA: instalação ---------- */
+/* ================= turno (cronômetro) ================= */
+const getShift=()=>{try{return JSON.parse(localStorage.getItem(SHIFT_KEY)||'null')}catch(e){return null}};
+function shiftToggle(){
+  const s=getShift();
+  if(!s){localStorage.setItem(SHIFT_KEY,JSON.stringify({start:Date.now()}));toast('Turno iniciado');render();return}
+  const h=(Date.now()-s.start)/3600000;
+  localStorage.removeItem(SHIFT_KEY);
+  if(h<1/60){toast('Turno muito curto, ignorado');render();return}
+  const date=ymd(new Date(s.start));let e=lastOf(date);
+  if(!e){e=normE({id:Date.now(),date,r:cfgFor(date.slice(0,7)).rate});state.entries.push(e)}
+  e.hours=r2(e.hours+h);e.u=Date.now();
+  persist();render();toast('Turno de '+fnum(h,2)+' h somado ao dia');
+}
+const clockTxt=ms=>{const t=Math.floor(ms/1000);return pad(Math.floor(t/3600))+':'+pad(Math.floor(t%3600/60))+':'+pad(t%60)};
+setInterval(()=>{const s=getShift(),el=$('shClock');if(s&&el)el.textContent=clockTxt(Date.now()-s.start)},1000);
+
+/* ================= configurações ================= */
+function saveSettings(){
+  const nv={goal:num('goal')||4500,rate:num('rate')||7,workDays:Math.max(1,Math.min(31,Math.round(num('workDays')||26))),costKm:Math.max(0,num('costKm')),goalBase:$('goalBase').value==='net'?'net':'gross'};
+  const now=Date.now();
+  // congela os meses antigos com os valores que valiam, para não mudarem retroativamente
+  monthsWithData().forEach(m=>{if(m!==viewMonth&&!state.monthCfg[m])state.monthCfg[m]=Object.assign({},cfgFor(m),{at:now})});
+  state.monthCfg[viewMonth]=Object.assign({},nv,{at:now});
+  if(viewMonth>=curMonth()){Object.assign(state,nv);state.settingsAt=now}
+  persist();render();toast('Configuração salva');go('home');
+}
+
+/* ================= exportar / importar ================= */
+function download(name,text,mime){const b=new Blob([text],{type:mime});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500)}
+function exportCsv(){
+  const n=v=>String(r2(v)).replace('.',',');
+  const rows=[['Data','Entregas','Promoção','Outros','Km','Horas','Custos','Bruto','Líquido']];
+  [...state.entries].sort((a,b)=>a.date.localeCompare(b.date)||a.id-b.id).forEach(e=>{const cfg=cfgFor(e.date.slice(0,7)),g=eGross(e,cfg),c=eCost(e,cfg);rows.push([br(e.date),e.deliveries,n(e.promo),n(e.other),n(e.km),n(e.hours),n(c),n(g),n(g-c)])});
+  download('meta-entregador.csv','\ufeff'+rows.map(r=>r.join(';')).join('\r\n'),'text/csv;charset=utf-8');toast('Planilha exportada');
+}
+function exportJson(){download('meta-entregador-backup.json',JSON.stringify(core(state),null,2),'application/json');toast('Backup salvo')}
+function importJson(ev){
+  const f=ev.target.files&&ev.target.files[0];if(!f)return;
+  const rd=new FileReader();
+  rd.onload=()=>{try{const o=JSON.parse(rd.result);if(!o||!Array.isArray(o.entries))throw 0;state=norm(merge(state,o));persist();viewMonth=curMonth();render();toast('Backup restaurado')}catch(e){toast('Arquivo de backup inválido')}ev.target.value=''};
+  rd.readAsText(f);
+}
+
+/* ================= gráficos (SVG) ================= */
+function chartDaily(R){
+  const W=320,H=132,pl=4,pr=4,pb=16,pt=8,n=R.dim,bw=(W-pl-pr)/n;
+  const target=R.cfg.goal/R.cfg.workDays;
+  const vals=[];for(let i=1;i<=n;i++){const k=R.m+'-'+pad(i);vals.push(R.days[k]?R.met(R.days[k]):0)}
+  const max=Math.max(target*1.15,...vals,1),ch=H-pt-pb;
+  let s='';
+  vals.forEach((v,i)=>{const h=v/max*ch,x=pl+i*bw+1.2,y=H-pb-h;if(v>0)s+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${(bw-2.4).toFixed(1)}" height="${h.toFixed(1)}" rx="2" fill="${v>=target?'#18a558':'#ea1d2c'}"/>`;
+    if(i===0||(i+1)%5===0)s+=`<text x="${(x+bw/2-1).toFixed(1)}" y="${H-3}" font-size="8" fill="#85706f" text-anchor="middle">${i+1}</text>`});
+  const ty=H-pb-target/max*ch;
+  s+=`<line x1="${pl}" x2="${W-pr}" y1="${ty.toFixed(1)}" y2="${ty.toFixed(1)}" stroke="#261113" stroke-width="1" stroke-dasharray="4 3"/>`;
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}">${s}</svg>`;
+}
+function chartCum(R){
+  const W=320,H=140,pl=6,pr=10,pb=14,pt=10,cw=W-pl-pr,ch=H-pt-pb;
+  const N=Math.max(R.cfg.workDays,R.worked,1),max=Math.max(R.cfg.goal,R.earned,1)*1.05;
+  const X=i=>pl+i/N*cw,Y=v=>H-pb-v/max*ch;
+  let acc=0;const pts=[`${X(0).toFixed(1)},${Y(0).toFixed(1)}`];
+  R.list.forEach((d,i)=>{acc+=R.met(d);pts.push(`${X(i+1).toFixed(1)},${Y(acc).toFixed(1)}`)});
+  const last=pts[pts.length-1].split(',');
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}"><line x1="${X(0).toFixed(1)}" y1="${Y(0).toFixed(1)}" x2="${X(R.cfg.workDays).toFixed(1)}" y2="${Y(R.cfg.goal).toFixed(1)}" stroke="#261113" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <polyline points="${pts.join(' ')}" fill="none" stroke="#ea1d2c" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="${last[0]}" cy="${last[1]}" r="4" fill="#ea1d2c"/>
+  <text x="${pl}" y="${H-2}" font-size="8" fill="#85706f">dia 0</text><text x="${W-pr}" y="${H-2}" font-size="8" fill="#85706f" text-anchor="end">dia ${N} de trabalho</text></svg>`;
+}
+function chartWeek(ws){
+  const W=320,H=130,pb=16,pt=16,bw=W/7,max=Math.max(...ws.avg,1),ch=H-pt-pb,best=ws.avg.indexOf(Math.max(...ws.avg));
+  let s='';
+  ws.avg.forEach((v,i)=>{const h=v/max*ch,x=i*bw+10,y=H-pb-h;
+    s+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${(bw-20).toFixed(1)}" height="${Math.max(h,0).toFixed(1)}" rx="4" fill="${i===best&&v>0?'#ea1d2c':'#f2b3b8'}"/>`;
+    if(v>0)s+=`<text x="${(x+(bw-20)/2).toFixed(1)}" y="${(y-4).toFixed(1)}" font-size="9" font-weight="700" fill="#261113" text-anchor="middle">${Math.round(v)}</text>`;
+    s+=`<text x="${(x+(bw-20)/2).toFixed(1)}" y="${H-3}" font-size="9" fill="#85706f" text-anchor="middle">${WD[i]}</text>`});
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}">${s}</svg>`;
+}
+
+/* ================= telas ================= */
+const card=(l,v,s,cls)=>`<div class="card ${cls||''}"><div class="l">${l}</div><div class="v">${v}</div><div class="s">${s||''}</div></div>`;
+const kv=(a,b)=>`<div class="kv"><span>${a}</span><b>${b}</b></div>`;
+const dash='—';
+function entryHtml(e,withActs){
+  const cfg=cfgFor(e.date.slice(0,7)),g=eGross(e,cfg),c=eCost(e,cfg);
+  const bits=[e.deliveries+' entregas','promo '+fmt(e.promo)];
+  if(e.other)bits.push('outros '+fmt(e.other));if(e.km)bits.push(fnum(e.km)+' km');if(e.hours)bits.push(fnum(e.hours,2)+' h');if(c>0)bits.push('custos '+fmt(c));
+  return `<div class="item"><div><div class="d">${br(e.date)} · ${WD[parseD(e.date).getDay()]}</div><div class="x">${bits.join(' · ')}</div></div><div class="t">${fmt(g)}${c>0?`<small>líquido ${fmt(g-c)}</small>`:''}${withActs?`<div class="acts"><button onclick="editEntry(${e.id})">Editar</button><button onclick="removeEntry(${e.id})">Excluir</button></div>`:''}</div></div>`;
+}
+function renderHome(R){
+  let pace='';
+  if(R.isCur){
+    if(R.remaining<=0&&R.worked)pace=`<div class="pace ok">Meta do mês batida! ${fmt(R.earned-R.cfg.goal)} acima do objetivo.</div>`;
+    else if(R.workedBefore>0)pace=R.paceDiff>=0?`<div class="pace ok">À frente do ritmo em ${fmt(R.paceDiff)} (até ontem).</div>`:`<div class="pace bad">Atrás do ritmo em ${fmt(-R.paceDiff)} (até ontem).</div>`;
+    if(R.overPlan&&R.remaining>0)pace+=`<div class="pace warn">Faltam só ${R.calLeft} dias no mês, mas você planejou mais ${R.workLeft} de trabalho. A meta de hoje já usa ${R.effDays} dia(s).</div>`;
+  }else if(R.worked){
+    pace=R.remaining<=0?`<div class="pace ok">Meta batida: ${fmt(R.earned-R.cfg.goal)} acima do objetivo.</div>`:`<div class="pace bad">Ficou ${fmt(R.remaining)} abaixo da meta.</div>`;
+  }
+  $('paceBox').innerHTML=pace;
+  let tb='';
+  if(R.isCur){
+    const sh=getShift(),pct=R.targetToday>0?Math.min(100,R.todayEarned/R.targetToday*100):100,now=new Date();
+    tb=`<div class="card today"><div class="trow"><div><div class="l">Hoje · ${WDL[now.getDay()]}, ${pad(now.getDate())}/${pad(now.getMonth()+1)}</div><div class="tv">${fmt(R.todayEarned)}</div></div><div><div class="l" style="text-align:right">Meta do dia</div><div class="tg">${fmt(R.targetToday)}</div></div></div>
+    <div class="progress dk"><div class="bar" style="width:${pct}%"></div></div>
+    <div class="s">${R.todayLeft>0?`Faltam ${fmt(R.todayLeft)} (≈ ${R.delLeft} entregas)`:'Meta de hoje batida!'} · ${R.todayDel} entregas feitas hoje</div>
+    ${R.todayWorked&&R.remaining>0&&R.perDayTomorrow!=null?`<div class="s">Se parar hoje: ${fmt(R.perDayTomorrow)}/dia nos próximos ${R.fromTomorrow} dias de trabalho.</div>`:''}
+    <div class="qrow"><button class="plus" onclick="quick(1)">+1 entrega</button><button class="ghost sm" onclick="quick(5)">+5</button><button class="ghost sm" onclick="quick(-1)">−1</button></div>
+    <div class="shift"><button class="shiftbtn ${sh?'on':''}" onclick="shiftToggle()">${sh?'Encerrar turno · <span id="shClock">'+clockTxt(Date.now()-sh.start)+'</span>':'Iniciar turno'}</button><div class="s">${sh?'Ao encerrar, as horas entram no dia.':'Marque as horas para ver o ganho por hora.'}</div></div></div>`;
+  }
+  $('todayBox').innerHTML=tb;
+  const T=R.T,perH=T.H.hours>0?T.H.met/T.H.hours:null,cards=[];
+  if(R.isCur){
+    cards.push(card('Meta de hoje',fmt(R.targetToday),R.remaining<=0?'meta do mês batida':'para manter a meta','red'));
+    cards.push(card('Entregas para hoje',R.delLeft,'de '+R.delToday+' na meta do dia'+(R.net?' (líquido)':''),'red'));
+    cards.push(card('Dias de trabalho restantes',R.remWork,R.rest+' folga(s) possível(is) no mês'));
+    cards.push(card('Projeção do mês',R.projection!=null?fmt(R.projection):dash,R.projection!=null?(R.projection>=R.cfg.goal?'ritmo acima da meta':'ritmo abaixo da meta'):'precisa de 3 dias lançados'));
+    cards.push(card('Bate a meta em',R.daysToGoal==null?dash:(R.daysToGoal===0?'Já bateu':R.daysToGoal+' dia(s)'),R.daysToGoal==null?'lance o 1º dia':'de trabalho, no ritmo atual'));
+    cards.push(card('Média por dia',R.worked?fmt(R.avgDay):dash,R.worked+' de '+R.cfg.workDays+' dias trabalhados'));
+  }else{
+    cards.push(card('Total do mês',fmt(R.earned),R.worked+' dias trabalhados','red'));
+    cards.push(card('Resultado',R.remaining<=0?'Meta batida':'−'+fmt(R.remaining),R.remaining<=0?fmt(R.earned-R.cfg.goal)+' acima':'abaixo da meta','red'));
+    cards.push(card('Média por dia',R.worked?fmt(R.avgDay):dash,'por dia trabalhado'));
+  }
+  cards.push(R.net?card('Bruto',fmt(T.gross),'antes dos custos'):card('Líquido',fmt(T.net),'custos '+fmt(T.cost)));
+  cards.push(card('Ganho por hora',perH!=null?fmt(perH):dash,T.H.hours>0?fnum(T.H.hours)+' h em '+T.H.days+' dia(s) com horas':'lance as horas'));
+  cards.push(card('Entregas feitas',T.deliveries,R.worked?fnum(T.deliveries/R.worked)+' por dia':'sem dias lançados'));
+  cards.push(card('Promoções',fmt(T.promo),R.worked?'média '+fmt(T.promo/R.worked)+'/dia':'sem promoções'));
+  if(cards.length%2)cards.push(card('Km rodados',fnum(T.km),T.km>0&&T.deliveries>0?fnum(T.km/T.deliveries,1)+' km por entrega':'lance os km'));
+  $('homeGrid').innerHTML=cards.join('');
+  const rev=R.rawEntries;
+  $('recent').innerHTML=rev.length?rev.slice(0,3).map(e=>entryHtml(e,false)).join(''):'<div class="empty">Nenhum dia lançado neste mês.</div>';
+}
+function renderStats(R){
+  const T=R.T,ws=weekdayStats(),rec=records(),w=R.worked;
+  const per=(a,b)=>b>0?fmt(a/b):dash;
+  let h='';
+  h+=`<h2 style="margin-top:4px">Resumo de ${monthName(R.m)}</h2><div class="grid">`+
+    card('Ganho bruto',fmt(T.gross),'entregas, promo e outros')+card('Custos',fmt(T.cost),T.km>0?fnum(T.km)+' km rodados':'sem km lançados')+
+    card('Líquido',fmt(T.net),T.gross>0?fnum(T.net/T.gross*100,0)+'% do bruto':'')+card('Horas',T.hours>0?fnum(T.hours)+' h':dash,w?'em '+w+' dias':'')+'</div>';
+  h+=`<h2>Eficiência</h2><div class="card">`+
+    kv('Ganho por entrega (bruto)',per(T.gross,T.deliveries))+kv('Líquido por entrega',per(T.net,T.deliveries))+
+    kv('Ganho por hora (bruto)',per(T.H.gross,T.H.hours))+kv('Líquido por hora',per(T.H.net,T.H.hours))+
+    kv('Ganho por km (bruto)',per(T.K.gross,T.K.km))+kv('Líquido por km',per(T.K.net,T.K.km))+
+    kv('Entregas por hora',T.H.hours>0?fnum(T.H.deliveries/T.H.hours):dash)+kv('Km por entrega',T.K.deliveries>0?fnum(T.K.km/T.K.deliveries):dash)+'</div><div class="cap" style="margin:6px 4px">Os cálculos por hora e por km usam só os dias em que você lançou horas ou km.</div>';
+  h+=`<h2>Médias por dia trabalhado</h2><div class="card">`+
+    kv('Ganho bruto',w?fmt(T.gross/w):dash)+kv('Entregas',w?fnum(T.deliveries/w):dash)+kv('Promoção',w?fmt(T.promo/w):dash)+kv('Km',w&&T.km>0?fnum(T.km/w):dash)+kv('Horas',w&&T.hours>0?fnum(T.hours/w,1)+' h':dash)+'</div>';
+  const daysPromo=R.list.filter(d=>d.promo>0).length;
+  h+=`<h2>Promoções</h2><div class="card">`+kv('Total no mês',fmt(T.promo))+kv('Parte do ganho bruto',T.gross>0?fnum(T.promo/T.gross*100,1)+'%':dash)+kv('Dias com promoção',daysPromo+' de '+w)+kv('Média nos dias com promoção',daysPromo?fmt(T.promo/daysPromo):dash)+'</div>';
+  h+=`<h2>Ganho por dia</h2><div class="card"><div class="ctitle">Cada barra é um dia do mês</div>${chartDaily(R)}<div class="cap">Verde: bateu a média diária necessária (${fmt(R.cfg.goal/R.cfg.workDays)}). Vermelho: ficou abaixo. Linha tracejada: média necessária.</div></div>`;
+  h+=`<h2>Acumulado x meta</h2><div class="card"><div class="ctitle">Seu mês contra o ritmo ideal</div>${chartCum(R)}<div class="cap">Linha vermelha: seu acumulado por dia trabalhado. Tracejada: ritmo ideal para chegar em ${fmt(R.cfg.goal)} em ${R.cfg.workDays} dias.</div></div>`;
+  const bestW=Math.max(...ws.avg);
+  h+=`<h2>Por dia da semana</h2><div class="card"><div class="ctitle">Média de ganho em cada dia (todos os meses)</div>${bestW>0?chartWeek(ws):'<div class="empty">Sem dados ainda.</div>'}${bestW>0?`<div class="cap">Melhor dia da semana: <b>${WDL[ws.avg.indexOf(bestW)]}</b>, com média de ${fmt(bestW)} (${ws.cnt[ws.avg.indexOf(bestW)]} dias lançados).</div>`:''}</div>`;
+  const pm=prevKey(R.m),hasPrev=state.entries.some(e=>e.date.startsWith(pm));
+  if(hasPrev){const P=calc(pm),d=R.earned-P.earned,pc=P.earned>0?d/P.earned*100:0;
+    h+=`<h2>Mês anterior</h2><div class="card">`+kv(monthName(pm),fmt(P.earned))+kv(monthName(R.m),fmt(R.earned))+kv('Diferença',`<span class="${d>=0?'pos':'neg'}">${d>=0?'+':'−'}${fmt(Math.abs(d))}${P.earned>0?' ('+(d>=0?'+':'−')+fnum(Math.abs(pc),0)+'%)':''}</span>`)+kv('Dias trabalhados',R.worked+' x '+P.worked)+'</div>'+(R.isCur?`<div class="cap" style="margin:6px 4px">O mês atual ainda está em andamento.</div>`:'')}
+  if(rec){h+=`<h2>Recordes</h2><div class="card">`+kv('Melhor dia',fmt(rec.gross.gross)+' · '+br(rec.gross.date))+kv('Mais entregas num dia',rec.del.del+' · '+br(rec.del.date))+(rec.promo?kv('Maior promoção num dia',fmt(rec.promo.promo)+' · '+br(rec.promo.date)):'')+(rec.hour?kv('Melhor ganho por hora',fmt(rec.hour.gross/rec.hour.hours)+' · '+br(rec.hour.date)):'')+'</div>'}
+  $('statsBox').innerHTML=h;
+}
+function render(){
+  if(viewMonth>curMonth())viewMonth=curMonth();
+  const R=calc(viewMonth);
+  R.rawEntries=state.entries.filter(e=>e.date.startsWith(viewMonth)).sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
+  const cfg=R.cfg;
+  $('monthLbl').textContent=monthName(viewMonth);
+  $('mPrev').disabled=viewMonth<=minMonth();$('mNext').disabled=viewMonth>=curMonth();
+  $('earnLbl').textContent=R.net?'GANHO LÍQUIDO':'GANHO REALIZADO';
+  $('earned').textContent=fmt(R.earned);$('remaining').textContent=fmt(R.remaining);
+  $('faltaLbl').textContent=R.remaining<=0&&R.worked?'Meta batida':'Falta para a meta';
+  $('goalText').textContent=fnum(R.pct,1)+'% da meta de '+fmt(cfg.goal);$('bar').style.width=R.pct+'%';
+  renderHome(R);renderStats(R);
+  $('hWorked').textContent=R.worked;$('hAvg').textContent=R.worked?fmt(R.avgDay):dash;
+  $('history').innerHTML=R.rawEntries.length?R.rawEntries.map(e=>entryHtml(e,true)).join(''):'<div class="empty">Nenhum dia lançado neste mês.</div>';
+  setVal('goal',cfg.goal);setVal('rate',cfg.rate);setVal('workDays',cfg.workDays);setVal('costKm',cfg.costKm||'');setVal('goalBase',cfg.goalBase);
+  $('cfgFor').textContent='Estes valores valem para '+monthName(viewMonth)+(viewMonth>=curMonth()?' e para os próximos meses.':'. Os outros meses não mudam.');
+  updatePreview();
+}
+
+/* ================= PWA ================= */
 let deferredPrompt=null;
 const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;if(!standalone)$('installBox').classList.remove('hidden')});
 $('installBtn').addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('installBox').classList.add('hidden')});
 window.addEventListener('appinstalled',()=>{$('installBox').classList.add('hidden');toast('App instalado')});
 if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!standalone)$('iosHint').classList.remove('hidden');
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)render()});
 
 const startTab=new URLSearchParams(location.search).get('tab');
-$('date').value=today();updatePreview();render();renderAccount();
-if(['home','add','hist','cfg'].includes(startTab))go(startTab);
+$('date').value=today();render();renderAccount();
+if(['home','add','stats','hist','cfg'].includes(startTab))go(startTab);
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js'));
 bootCloud();
 </script>

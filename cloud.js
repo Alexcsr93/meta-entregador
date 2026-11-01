@@ -1,5 +1,6 @@
 // Camada de nuvem (Firebase Auth + Firestore). Carregada sob demanda:
 // se estiver offline ou sem configuração, o app continua funcionando local.
+
 // Configuração do projeto Firebase "meta-entregador" (não é segredo: a segurança fica nas regras do Firestore)
 const firebaseConfig = {
   apiKey: "AIzaSyDM293szGquYjDla5rUNtV2bhs4LV-S-C0",

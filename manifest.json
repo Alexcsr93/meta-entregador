@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Meta Entregador",
   "short_name": "Meta Entregador",
-  "description": "Controle de ganhos e metas para entregadores: veja quanto falta, quanto precisa fazer por dia e a projeção do mês.",
+  "description": "Controle de ganhos e metas para entregadores: quanto falta, quanto fazer por dia, ganho por hora e projeção do mês.",
   "lang": "pt-BR",
   "dir": "ltr",
   "start_url": "./?source=pwa",
@@ -21,16 +21,11 @@
     { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
   ],
   "shortcuts": [
-    {
-      "name": "Lançar ganhos",
-      "short_name": "Lançar",
-      "description": "Adicionar entregas e promoções do dia",
-      "url": "./?tab=add&source=shortcut",
-      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
-    }
+    { "name": "Lançar ganhos", "short_name": "Lançar", "description": "Adicionar entregas e promoções do dia", "url": "./?tab=add&source=shortcut", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Ver métricas", "short_name": "Métricas", "description": "Gráficos e eficiência do mês", "url": "./?tab=stats&source=shortcut", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
   ],
   "screenshots": [
-    { "src": "screenshots/inicio.png", "sizes": "540x1170", "type": "image/png", "form_factor": "narrow", "label": "Visão geral da meta" },
-    { "src": "screenshots/lancar.png", "sizes": "540x1170", "type": "image/png", "form_factor": "narrow", "label": "Lançar ganhos do dia" }
+    { "src": "screenshots/inicio.png", "sizes": "540x1170", "type": "image/png", "form_factor": "narrow", "label": "Visão geral da meta e do dia" },
+    { "src": "screenshots/metricas.png", "sizes": "540x1170", "type": "image/png", "form_factor": "narrow", "label": "Métricas e gráficos" }
   ]
 }
