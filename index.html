@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ea1d2c"><title>Meta Entregador</title>
+<link rel="manifest" href="manifest.json">
+<style>
+:root{--red:#ea1d2c;--dark:#a70f1a;--white:#fff;--ink:#261113;--soft:#fff1f2;--green:#18a558;--yellow:#ffcc3d}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f6f4f4;color:var(--ink)}
+header{background:linear-gradient(145deg,var(--red),var(--dark));color:#fff;padding:22px 18px 28px;border-radius:0 0 28px 28px;box-shadow:0 8px 24px #a70f1a40;position:sticky;top:0;z-index:5}
+.head{max-width:980px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand h1{font-size:22px;margin:0}.brand p{margin:4px 0 0;opacity:.85;font-size:13px}.pill{background:#ffffff24;border:1px solid #ffffff44;padding:8px 11px;border-radius:999px;font-weight:800;font-size:12px}
+main{max-width:980px;margin:-12px auto 82px;padding:0 14px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:#fff;border-radius:18px;padding:16px;box-shadow:0 7px 24px #4d15151a;border:1px solid #eee}.hero{grid-column:span 2;background:linear-gradient(145deg,#fff,#fff4f5)}.label{font-size:12px;color:#6f5a5c;font-weight:700}.value{font-size:27px;font-weight:900;margin-top:5px}.sub{font-size:12px;color:#796668;margin-top:5px}.progress{height:12px;background:#eadfe0;border-radius:99px;overflow:hidden;margin-top:13px}.bar{height:100%;background:linear-gradient(90deg,var(--red),#ff6974);width:0;transition:.3s}.section{margin:16px 0 8px;font-size:17px}.form{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.field label{display:block;font-size:12px;font-weight:800;margin:0 0 6px;color:#654f51}.field input{width:100%;border:1px solid #ddcfd0;border-radius:12px;padding:12px;font-size:16px;outline:none}.field input:focus{border-color:var(--red);box-shadow:0 0 0 3px #ea1d2c1c}.actions{display:flex;gap:9px;margin-top:12px;flex-wrap:wrap}button{border:0;border-radius:12px;padding:12px 16px;font-weight:900;cursor:pointer}.primary{background:var(--red);color:#fff}.secondary{background:#f0e8e9;color:#5c3135}.danger{background:#fff0f1;color:var(--red)}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:11px 7px;border-bottom:1px solid #eee}th{color:#7a6768;font-size:11px}.empty{text-align:center;color:#8b7779;padding:24px}
+.settings{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.notice{background:#fff8db;color:#695300;border-radius:12px;padding:11px;font-size:12px;margin-top:12px}.positive{color:var(--green)}.negative{color:var(--red)}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr)}.hero{grid-column:span 2}.form,.settings{grid-template-columns:repeat(2,1fr)}.value{font-size:23px}header{position:relative}main{margin-top:-12px}}
+@media(max-width:430px){.form,.settings{grid-template-columns:1fr}.grid{gap:9px}.card{padding:13px}.head .pill{display:none}table{font-size:12px}.tablewrap{overflow:auto}}
+</style></head>
+<body>
+<header><div class="head"><div class="brand"><h1>🏍️ Meta Entregador</h1><p>Seu ganho, sua rota, sua meta.</p></div><div class="pill" id="monthPill"></div></div></header>
+<main>
+<section class="grid">
+<div class="card hero"><div class="label">GANHO REALIZADO</div><div class="value" id="earned">R$ 0,00</div><div class="sub" id="goalText"></div><div class="progress"><div class="bar" id="bar"></div></div></div>
+<div class="card"><div class="label">FALTA PARA A META</div><div class="value negative" id="remaining">R$ 0,00</div><div class="sub" id="daysRemaining"></div></div>
+<div class="card"><div class="label">PRECISA POR DIA</div><div class="value" id="perDay">R$ 0,00</div><div class="sub">nos dias de trabalho restantes</div></div>
+<div class="card"><div class="label">ENTREGAS POR DIA</div><div class="value" id="deliveriesPerDay">0</div><div class="sub">estimativa sem novas promoções</div></div>
+<div class="card"><div class="label">TOTAL DE ENTREGAS</div><div class="value" id="totalDeliveries">0</div><div class="sub" id="deliveryAvg"></div></div>
+<div class="card"><div class="label">PROMOÇÕES GANHAS</div><div class="value positive" id="totalPromo">R$ 0,00</div><div class="sub" id="promoAvg"></div></div>
+<div class="card"><div class="label">PROJEÇÃO DO MÊS</div><div class="value" id="projection">R$ 0,00</div><div class="sub" id="projectionText"></div></div>
+</section>
+<h2 class="section">Lançar dia trabalhado</h2>
+<section class="card"><div class="form">
+<div class="field"><label>Data</label><input id="date" type="date"></div>
+<div class="field"><label>Quantidade de entregas</label><input id="deliveries" type="number" min="0" step="1" placeholder="Ex.: 17"></div>
+<div class="field"><label>Promoção adicional (R$)</label><input id="promo" type="number" min="0" step="0.01" placeholder="Ex.: 4,00"></div>
+<div class="field"><label>Outros ganhos (R$)</label><input id="other" type="number" min="0" step="0.01" placeholder="Gorjeta, ajuste..."></div>
+</div><div class="actions"><button class="primary" onclick="addEntry()">+ Adicionar resultado</button><button class="secondary" onclick="fillToday()">Usar data de hoje</button></div><div class="notice">Ganho do dia = entregas × valor por entrega + promoção + outros ganhos.</div></section>
+<h2 class="section">Configuração da meta</h2>
+<section class="card"><div class="settings">
+<div class="field"><label>Meta mensal (R$)</label><input id="goal" type="number" min="1" step="0.01"></div>
+<div class="field"><label>Ganho por entrega (R$)</label><input id="rate" type="number" min="0.01" step="0.01"></div>
+<div class="field"><label>Dias que deseja trabalhar</label><input id="workDays" type="number" min="1" max="31" step="1"></div>
+</div><div class="actions"><button class="primary" onclick="saveSettings()">Salvar configuração</button></div></section>
+<h2 class="section">Histórico do mês</h2>
+<section class="card tablewrap"><table><thead><tr><th>DATA</th><th>ENTREGAS</th><th>BASE</th><th>PROMO</th><th>OUTROS</th><th>TOTAL</th><th></th></tr></thead><tbody id="history"></tbody></table><div class="actions"><button class="danger" onclick="clearAll()">Limpar lançamentos</button></div></section>
+</main>
+<script>
+const KEY='meta-entregador-v1';
+let state=JSON.parse(localStorage.getItem(KEY)||'null')||{goal:4500,rate:7,workDays:26,entries:[]};
+const fmt=v=>Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const n=id=>Number(document.getElementById(id).value||0);
+function persist(){localStorage.setItem(KEY,JSON.stringify(state))}
+function fillToday(){document.getElementById('date').value=new Date().toISOString().slice(0,10)}
+function saveSettings(){state.goal=n('goal')||4500;state.rate=n('rate')||7;state.workDays=Math.max(1,Math.round(n('workDays')||26));persist();render()}
+function addEntry(){const date=document.getElementById('date').value;if(!date){alert('Escolha a data.');return}const deliveries=Math.max(0,Math.round(n('deliveries')));const promo=Math.max(0,n('promo'));const other=Math.max(0,n('other'));if(!deliveries&&!promo&&!other){alert('Informe ao menos uma entrega ou ganho.');return}state.entries.push({id:Date.now(),date,deliveries,promo,other});state.entries.sort((a,b)=>a.date.localeCompare(b.date));persist();['deliveries','promo','other'].forEach(x=>document.getElementById(x).value='');render()}
+function removeEntry(id){state.entries=state.entries.filter(e=>e.id!==id);persist();render()}
+function clearAll(){if(confirm('Apagar todos os lançamentos deste controle?')){state.entries=[];persist();render()}}
+function render(){
+ document.getElementById('goal').value=state.goal;document.getElementById('rate').value=state.rate;document.getElementById('workDays').value=state.workDays;
+ const worked=new Set(state.entries.map(e=>e.date)).size,totalDel=state.entries.reduce((s,e)=>s+e.deliveries,0),promo=state.entries.reduce((s,e)=>s+e.promo,0),other=state.entries.reduce((s,e)=>s+e.other,0),base=totalDel*state.rate,earned=base+promo+other,remaining=Math.max(0,state.goal-earned),daysLeft=Math.max(0,state.workDays-worked),perDay=daysLeft?remaining/daysLeft:remaining,delPerDay=daysLeft?Math.ceil(perDay/state.rate):0,avg=worked?earned/worked:0,projection=earned+avg*daysLeft,pct=Math.min(100,state.goal?earned/state.goal*100:0);
+ earnedEl=document.getElementById('earned');earnedEl.textContent=fmt(earned);document.getElementById('remaining').textContent=fmt(remaining);document.getElementById('perDay').textContent=fmt(perDay);document.getElementById('deliveriesPerDay').textContent=delPerDay;document.getElementById('totalDeliveries').textContent=totalDel;document.getElementById('totalPromo').textContent=fmt(promo);document.getElementById('projection').textContent=fmt(projection);document.getElementById('bar').style.width=pct+'%';
+ document.getElementById('goalText').textContent=pct.toFixed(1).replace('.',',')+'% da meta de '+fmt(state.goal);document.getElementById('daysRemaining').textContent=daysLeft+' de '+state.workDays+' dias restantes';document.getElementById('deliveryAvg').textContent=worked?(totalDel/worked).toFixed(1).replace('.',',')+' por dia trabalhado':'sem dias lançados';document.getElementById('promoAvg').textContent=worked?'média de '+fmt(promo/worked)+' por dia':'sem promoções lançadas';document.getElementById('projectionText').textContent=worked?(projection>=state.goal?'ritmo atual acima da meta':'ritmo atual abaixo da meta'):'adicione o primeiro dia';
+ document.getElementById('monthPill').textContent=new Date().toLocaleDateString('pt-BR',{month:'long',year:'numeric'});
+ const h=document.getElementById('history');h.innerHTML=state.entries.length?state.entries.map(e=>{const t=e.deliveries*state.rate+e.promo+e.other;return `<tr><td>${e.date.split('-').reverse().join('/')}</td><td>${e.deliveries}</td><td>${fmt(e.deliveries*state.rate)}</td><td>${fmt(e.promo)}</td><td>${fmt(e.other)}</td><td><b>${fmt(t)}</b></td><td><button class="danger" onclick="removeEntry(${e.id})">Excluir</button></td></tr>`}).join(''):'<tr><td colspan="7" class="empty">Nenhum dia lançado ainda.</td></tr>';
+}
+fillToday();render();if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
+</script></body></html>

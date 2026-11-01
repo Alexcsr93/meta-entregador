@@ -1,0 +1,9 @@
+{
+  "name": "Meta Entregador",
+  "short_name": "Meta Entregador",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ea1d2c",
+  "theme_color": "#ea1d2c",
+  "icons": []
+}

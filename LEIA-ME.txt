@@ -1,0 +1,5 @@
+META ENTREGADOR v1
+
+Publique os arquivos em um repositório GitHub Pages ou no Netlify.
+Os dados ficam salvos no próprio navegador do aparelho.
+Parâmetros iniciais: meta R$ 4.500, ganho por entrega R$ 7 e 26 dias de trabalho.
