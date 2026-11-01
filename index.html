@@ -28,9 +28,13 @@ header{background:linear-gradient(160deg,var(--red),var(--dark));color:#fff;padd
 header .top{display:flex;justify-content:space-between;align-items:center}
 header h1{margin:0;font-size:22px;font-weight:700;letter-spacing:.3px;display:flex;align-items:center;gap:9px}
 header h1 img{width:30px;height:30px;border-radius:8px;box-shadow:0 0 0 1.5px #ffffff66}
-header .month{font-size:13px;font-weight:700;background:#ffffff26;border:1px solid #ffffff40;padding:5px 12px;border-radius:99px}
+.avatar{position:relative;width:40px;height:40px;border-radius:50%;padding:0;background:#ffffff26;border:1.5px solid #ffffff66;color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+.avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.avatar svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.avatar .st{position:absolute;right:-1px;bottom:-1px;width:12px;height:12px;border-radius:50%;border:2px solid var(--red);background:#9aa0a6}
+.avatar .st.ok{background:#34d27b}.avatar .st.sync{background:#ffcc3d}.avatar .st.err{background:#2a1a1c}
 .hero{margin-top:20px}
-.hero .lbl{font-size:13px;font-weight:700;opacity:.85;letter-spacing:1.2px}
+.hero .lbl{font-size:13px;font-weight:700;opacity:.85;letter-spacing:1.2px;text-transform:uppercase}
 .hero .big{font-size:48px;font-weight:700;line-height:1.05;margin:2px 0 4px;letter-spacing:.2px}
 .hero .meta{font-size:15px;opacity:.92}
 .progress{height:10px;background:#ffffff33;border-radius:99px;overflow:hidden;margin-top:14px}
@@ -73,14 +77,24 @@ nav button.active{color:var(--red);background:#fff0f1}
 .toast{position:fixed;left:50%;bottom:98px;transform:translateX(-50%);background:#2a1a1c;color:#fff;padding:10px 18px;border-radius:99px;font-size:15px;opacity:0;pointer-events:none;transition:.3s;z-index:20;white-space:nowrap}
 .toast.show{opacity:1}
 .hidden{display:none!important}
+.acc-text{font-size:15px;color:#5d4749;line-height:1.35;margin-bottom:14px}
+.gbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:#3c4043;border:1px solid #dadce0;font-weight:700}
+.gbtn:active{background:#f6f6f6}.gbtn svg{width:20px;height:20px}
+.acc{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.acc .pic{width:46px;height:46px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;overflow:hidden;flex:none}
+.acc .pic img{width:100%;height:100%;object-fit:cover}
+.acc .n{font-weight:700;font-size:18px}.acc .e{font-size:14px;color:var(--muted);word-break:break-all}
+.status{display:flex;align-items:center;gap:8px;font-size:15px;background:#f8f3f3;border-radius:12px;padding:10px 12px;margin-bottom:12px}
+.status .dot{width:10px;height:10px;border-radius:50%;background:#9aa0a6;flex:none}
+.status.ok .dot{background:var(--green)}.status.sync .dot{background:#f5a300}.status.err .dot{background:var(--red)}
 </style>
 </head>
 <body>
 <div class="app">
 <header>
-  <div class="top"><h1><img src="icons/icon-192.png" alt="">Meta Entregador</h1><div class="month" id="month"></div></div>
+  <div class="top"><h1><img src="icons/icon-192.png" alt="">Meta Entregador</h1><button class="avatar" id="avatarBtn" onclick="go('cfg')" aria-label="Conta e backup"></button></div>
   <div class="hero">
-    <div class="lbl">GANHO REALIZADO</div>
+    <div class="lbl">GANHO REALIZADO · <span id="monthLbl"></span></div>
     <div class="big" id="earned">R$ 0,00</div>
     <div class="meta" id="goalText"></div>
     <div class="progress"><div class="bar" id="bar"></div></div>
@@ -128,7 +142,9 @@ nav button.active{color:var(--red);background:#fff0f1}
   </section>
 
   <section class="tab" id="tab-cfg">
-    <h2 style="margin-top:4px">Parâmetros da meta</h2>
+    <h2 style="margin-top:4px">Conta e backup</h2>
+    <div class="card" id="accountCard"></div>
+    <h2>Parâmetros da meta</h2>
     <div class="card">
       <div class="field"><label>Meta mensal (R$)</label><input id="goal" type="number" inputmode="decimal" step="0.01"></div>
       <div class="row2">
@@ -144,7 +160,7 @@ nav button.active{color:var(--red);background:#fff0f1}
     <p class="note hidden" id="iosHint">No iPhone: toque em Compartilhar e depois em “Adicionar à Tela de Início”.</p>
     <h2>Dados</h2>
     <div class="card"><button class="btn danger" onclick="clearAll()">Apagar todos os lançamentos</button></div>
-    <p class="note" style="text-align:center">Meta Entregador v1.2 · dados salvos neste aparelho</p>
+    <p class="note" style="text-align:center">Meta Entregador v1.3</p>
   </section>
 </main>
 
@@ -159,26 +175,131 @@ nav button.active{color:var(--red);background:#fff0f1}
 
 <script>
 const KEY='meta-entregador-v1';
-let state=JSON.parse(localStorage.getItem(KEY)||'null')||{goal:4500,rate:7,workDays:26,entries:[]};
+const DEFAULT={goal:4500,rate:7,workDays:26,settingsAt:0,entries:[],deleted:[]};
+let state=Object.assign({},DEFAULT,JSON.parse(localStorage.getItem(KEY)||'null')||{});
+state.entries=state.entries||[];state.deleted=state.deleted||[];
 const $=id=>document.getElementById(id);
 const fmt=v=>Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const num=id=>Number($(id).value||0);
 const br=d=>d.split('-').reverse().join('/');
+const esc=t=>String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
-function persist(){localStorage.setItem(KEY,JSON.stringify(state))}
-function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('show'),2200)}
 function go(tab){
   document.querySelectorAll('.tab').forEach(s=>s.classList.toggle('active',s.id==='tab-'+tab));
   document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
+/* ---------- dados locais + sincronização ---------- */
+const core=s=>({goal:s.goal,rate:s.rate,workDays:s.workDays,settingsAt:s.settingsAt||0,
+  entries:[...(s.entries||[])].sort((a,b)=>a.id-b.id||0).map(e=>({id:e.id,date:e.date,deliveries:e.deliveries||0,promo:e.promo||0,other:e.other||0})),
+  deleted:[...new Set(s.deleted||[])].sort((a,b)=>a-b)});
+const same=(a,b)=>JSON.stringify(core(a))===JSON.stringify(core(b));
+function merge(a,b){
+  const del=new Set([...(a.deleted||[]),...(b.deleted||[])]);
+  const map=new Map();
+  [...(a.entries||[]),...(b.entries||[])].forEach(e=>{if(!del.has(e.id)&&!map.has(e.id))map.set(e.id,e)});
+  const pick=(a.settingsAt||0)>=(b.settingsAt||0)&&a.goal!=null?a:(b.goal!=null?b:a);
+  return core({goal:pick.goal,rate:pick.rate,workDays:pick.workDays,settingsAt:pick.settingsAt||0,entries:[...map.values()],deleted:[...del]});
+}
+let Cloud=null,cloudState='loading',user=null,ready=false,dirty=false,syncStatus='idle',syncErr='',lastSync=Number(localStorage.getItem(KEY+'-last')||0),pushT=null,unwatch=null;
+function persist(skipSync){
+  localStorage.setItem(KEY,JSON.stringify(core(state)));
+  if(!skipSync){dirty=true;if(user){clearTimeout(pushT);pushT=setTimeout(pushNow,500)}}
+}
+function setStatus(st,err){syncStatus=st;syncErr=err?(err.code||err.message||String(err)):'';renderAccount()}
+function markSynced(){lastSync=Date.now();localStorage.setItem(KEY+'-last',lastSync)}
+async function pushNow(){
+  if(!user||!ready||!Cloud)return;
+  if(!navigator.onLine){setStatus('offline');return}
+  setStatus('syncing');
+  try{await Cloud.push(user.uid,Object.assign(core(state),{updatedAt:Date.now()}));dirty=false;markSynced();setStatus('ok')}
+  catch(e){setStatus('error',e)}
+}
+function onRemote(remote,pending){
+  const merged=merge(state,remote||{});
+  if(!same(merged,state)){state=Object.assign({},state,merged);persist(true);render()}
+  if(pending)return;
+  ready=true;
+  if(!remote||!same(merged,remote))pushNow();
+  else{dirty=false;markSynced();setStatus('ok')}
+}
+function startUser(u){
+  user=u;ready=false;setStatus('syncing');
+  if(unwatch)unwatch();
+  unwatch=Cloud.watch(u.uid,onRemote,err=>setStatus('error',err));
+}
+function stopUser(){if(unwatch)unwatch();unwatch=null;user=null;ready=false;syncStatus='idle';renderAccount()}
+async function signIn(){
+  if(!Cloud||cloudState!=='ready'){await bootCloud();if(cloudState!=='ready'){toast('Sem conexão com o serviço do Google');return}}
+  toast('Abrindo login do Google…');
+  const r=await Cloud.signIn();
+  if(!r.ok){
+    const m={'auth/popup-closed-by-user':'','auth/cancelled-popup-request':'','auth/unauthorized-domain':'Domínio não autorizado no Firebase','auth/network-request-failed':'Sem conexão com a internet'}[r.code];
+    if(m!=='')toast(m||'Não foi possível entrar ('+(r.code||'erro')+')');
+  }
+}
+function syncNow(){
+  if(!user)return;
+  if(!ready){setStatus(navigator.onLine?'syncing':'offline');return}
+  pushNow();
+}
+async function signOutUser(){
+  const msg=dirty?'Há alterações que ainda NÃO foram enviadas para a nuvem e serão perdidas neste aparelho. Sair mesmo assim?':'Sair da conta? Os dados deste aparelho serão removidos, mas continuam salvos na sua conta Google.';
+  if(!confirm(msg))return;
+  try{await Cloud.signOut()}catch(e){}
+  stopUser();
+  state=Object.assign({},DEFAULT,{entries:[],deleted:[]});persist(true);dirty=false;render();toast('Você saiu da conta');
+}
+function ago(t){if(!t)return'';const s=Math.round((Date.now()-t)/1000);if(s<45)return'agora';if(s<3600)return'há '+Math.round(s/60)+' min';if(s<86400)return'há '+Math.round(s/3600)+' h';return'em '+new Date(t).toLocaleDateString('pt-BR')}
+const G='<svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.9 2.4 30.4 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.7a14.5 14.5 0 0 1 0-9.4l-7.9-6.1a24 24 0 0 0 0 21.6l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.9 2.3-8.4 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>';
+function renderAccount(){
+  const box=$('accountCard'),av=$('avatarBtn');if(!box)return;
+  const userSvg='<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>';
+  let dot='';
+  if(user){dot=syncStatus==='ok'?'ok':(syncStatus==='error'?'err':(syncStatus==='syncing'?'sync':''))}
+  av.innerHTML=(user&&user.photoURL?`<img src="${esc(user.photoURL)}" alt="" referrerpolicy="no-referrer">`:userSvg)+(user?`<span class="st ${dot}"></span>`:'');
+  if(!user){
+    if(cloudState==='unconfigured'){box.innerHTML='<div class="acc-text">O backup na nuvem ainda não foi configurado. Preencha o arquivo <b>firebase-config.js</b> (veja o LEIA-ME). Enquanto isso, os dados ficam só neste aparelho.</div>';return}
+    if(cloudState==='unavailable'){box.innerHTML='<div class="acc-text">Não foi possível conectar ao serviço de login. Verifique a internet e tente de novo. Seus dados continuam salvos neste aparelho.</div><button class="btn ghost" onclick="bootCloud()">Tentar novamente</button>';return}
+    box.innerHTML=`<div class="acc-text">Entre com sua conta Google para guardar um backup na nuvem e acessar seus ganhos em qualquer aparelho.</div><button class="btn gbtn" onclick="signIn()" ${cloudState==='loading'?'disabled':''}>${G}Entrar com Google</button>`;
+    return;
+  }
+  const name=user.displayName||'Minha conta',ini=esc(name.trim().charAt(0).toUpperCase());
+  let cls='',txt='';
+  if(!navigator.onLine||syncStatus==='offline'){cls='sync';txt='Sem conexão · sincroniza quando voltar'}
+  else if(syncStatus==='syncing'){cls='sync';txt='Sincronizando…'}
+  else if(syncStatus==='error'){cls='err';txt=(/permission/.test(syncErr)?'Sem permissão. Confira as regras do Firestore':'Erro ao sincronizar ('+esc(syncErr)+')')}
+  else if(syncStatus==='ok'){cls='ok';txt='Sincronizado '+ago(lastSync)}
+  else{txt='Conectado'}
+  box.innerHTML=`<div class="acc"><div class="pic">${user.photoURL?`<img src="${esc(user.photoURL)}" alt="" referrerpolicy="no-referrer">`:ini}</div><div><div class="n">${esc(name)}</div><div class="e">${esc(user.email)}</div></div></div>
+  <div class="status ${cls}"><span class="dot"></span><span>${txt}</span></div>
+  <div class="row2"><button class="ghost" onclick="syncNow()">Sincronizar</button><button class="danger" onclick="signOutUser()">Sair</button></div>`;
+}
+async function bootCloud(){
+  cloudState='loading';renderAccount();
+  try{
+    Cloud=Cloud||await import('./cloud.js');
+    if(!Cloud.configured()){cloudState='unconfigured';renderAccount();return}
+    await Cloud.init();
+    cloudState='ready';
+    if(!bootCloud._sub){bootCloud._sub=true;Cloud.onUser(u=>u?startUser(u):stopUser())}
+    renderAccount();
+  }catch(e){cloudState='unavailable';renderAccount()}
+}
+window.addEventListener('online',()=>{if(cloudState==='unavailable')bootCloud();else if(user){if(dirty||!ready)setStatus('syncing');pushNow()}});
+window.addEventListener('offline',()=>renderAccount());
+setInterval(()=>{if(user&&syncStatus==='ok')renderAccount()},60000);
+
+/* ---------- ações do app ---------- */
 function updatePreview(){
   const t=Math.round(num('deliveries'))*state.rate+num('promo')+num('other');
   $('preview').innerHTML='Total deste lançamento: <b>'+fmt(t)+'</b>';
 }
 ['deliveries','promo','other'].forEach(i=>$(i).addEventListener('input',updatePreview));
 function saveSettings(){
-  state.goal=num('goal')||4500;state.rate=num('rate')||7;state.workDays=Math.max(1,Math.round(num('workDays')||26));
+  state.goal=num('goal')||4500;state.rate=num('rate')||7;state.workDays=Math.max(1,Math.round(num('workDays')||26));state.settingsAt=Date.now();
   persist();render();toast('Configuração salva');go('home');
 }
 function addEntry(){
@@ -189,8 +310,8 @@ function addEntry(){
   state.entries.sort((a,b)=>a.date.localeCompare(b.date)||a.id-b.id);
   persist();['deliveries','promo','other'].forEach(i=>$(i).value='');updatePreview();render();toast('Lançamento adicionado');go('home');
 }
-function removeEntry(id){if(confirm('Excluir este lançamento?')){state.entries=state.entries.filter(e=>e.id!==id);persist();render()}}
-function clearAll(){if(confirm('Apagar TODOS os lançamentos?')){state.entries=[];persist();render();toast('Lançamentos apagados')}}
+function removeEntry(id){if(confirm('Excluir este lançamento?')){state.entries=state.entries.filter(e=>e.id!==id);state.deleted.push(id);persist();render()}}
+function clearAll(){if(confirm('Apagar TODOS os lançamentos?'+(user?' Isso também apaga da nuvem.':''))){state.entries.forEach(e=>state.deleted.push(e.id));state.entries=[];persist();render();toast('Lançamentos apagados')}}
 function entryHtml(e,withDel){
   const t=e.deliveries*state.rate+e.promo+e.other;
   return `<div class="item"><div><div class="d">${br(e.date)}</div><div class="x">${e.deliveries} entregas · promo ${fmt(e.promo)}${e.other?' · outros '+fmt(e.other):''}</div></div><div class="t">${fmt(t)}${withDel?`<br><button class="del" onclick="removeEntry(${e.id})">Excluir</button>`:''}</div></div>`;
@@ -205,7 +326,7 @@ function render(){
   const delPerDay=Math.ceil(perDay/state.rate);
   const avg=worked?earned/worked:0,projection=earned+avg*daysLeft;
   const pct=Math.min(100,state.goal?earned/state.goal*100:0);
-  {const m=new Date().toLocaleDateString('pt-BR',{month:'long',year:'numeric'});$('month').textContent=m.charAt(0).toUpperCase()+m.slice(1)}
+  $('monthLbl').textContent=new Date().toLocaleDateString('pt-BR',{month:'long',year:'numeric'});
   $('earned').textContent=fmt(earned);$('remaining').textContent=fmt(remaining);
   $('goalText').textContent=pct.toFixed(1).replace('.',',')+'% da meta de '+fmt(state.goal);$('bar').style.width=pct+'%';
   $('perDay').textContent=fmt(perDay);$('delPerDay').textContent=delPerDay;
@@ -220,7 +341,7 @@ function render(){
   $('history').innerHTML=rev.length?rev.map(e=>entryHtml(e,true)).join(''):'<div class="empty">Nenhum dia lançado ainda.</div>';
 }
 
-/* PWA: instalação */
+/* ---------- PWA: instalação ---------- */
 let deferredPrompt=null;
 const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;if(!standalone)$('installBox').classList.remove('hidden')});
@@ -228,11 +349,10 @@ $('installBtn').addEventListener('click',async()=>{if(!deferredPrompt)return;def
 window.addEventListener('appinstalled',()=>{$('installBox').classList.add('hidden');toast('App instalado')});
 if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!standalone)$('iosHint').classList.remove('hidden');
 
-/* Atalho do ícone (?tab=add) */
 const startTab=new URLSearchParams(location.search).get('tab');
-
-$('date').value=today();updatePreview();render();
+$('date').value=today();updatePreview();render();renderAccount();
 if(['home','add','hist','cfg'].includes(startTab))go(startTab);
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js'));
+bootCloud();
 </script>
 </body></html>
