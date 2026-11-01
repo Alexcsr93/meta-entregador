@@ -1,7 +1,7 @@
-const VERSION='v1.3.1';
+const VERSION='v1.3.2';
 const CACHE='meta-entregador-'+VERSION;
 const ASSETS=[
-  './','./index.html','./manifest.json','./icon.svg','./cloud.js','./firebase-config.js',
+  './','./index.html','./manifest.json','./icon.svg','./cloud.js',
   './fonts/narrow-400.woff2','./fonts/narrow-700.woff2',
   './icons/icon-192.png','./icons/icon-512.png',
   './icons/maskable-192.png','./icons/maskable-512.png',

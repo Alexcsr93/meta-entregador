@@ -1,6 +1,15 @@
 // Camada de nuvem (Firebase Auth + Firestore). Carregada sob demanda:
 // se estiver offline ou sem configuração, o app continua funcionando local.
-import { firebaseConfig } from './firebase-config.js';
+// Configuração do projeto Firebase "meta-entregador" (não é segredo: a segurança fica nas regras do Firestore)
+const firebaseConfig = {
+  apiKey: "AIzaSyDM293szGquYjDla5rUNtV2bhs4LV-S-C0",
+  authDomain: "meta-entregador.firebaseapp.com",
+  projectId: "meta-entregador",
+  storageBucket: "meta-entregador.firebasestorage.app",
+  messagingSenderId: "16692857917",
+  appId: "1:16692857917:web:285eb075cf06669088ae54",
+  measurementId: "G-5JEPMR3CTW"
+};
 
 const V = '10.14.1';
 const B = `https://www.gstatic.com/firebasejs/${V}/`;
